@@ -61,6 +61,16 @@
 		3A07F8681B758B5200E2021E /* bloodSpurts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A07F8661B758B5200E2021E /* bloodSpurts.plist */; };
 		3A55D3E01B8E024200C55EC9 /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A55D3DF1B8E024200C55EC9 /* plane.png */; };
 		3A55D3E11B8E024200C55EC9 /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A55D3DF1B8E024200C55EC9 /* plane.png */; };
+		3A55E22A1BFC495B001E09CD /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 3A55E2161BFC495B001E09CD /* Android.mk */; };
+		3A55E22B1BFC495B001E09CD /* libmobclickcpp.so in Resources */ = {isa = PBXBuildFile; fileRef = 3A55E21B1BFC495B001E09CD /* libmobclickcpp.so */; };
+		3A55E22C1BFC495B001E09CD /* libmobclickcpp.so in Resources */ = {isa = PBXBuildFile; fileRef = 3A55E21D1BFC495B001E09CD /* libmobclickcpp.so */; };
+		3A55E22D1BFC495B001E09CD /* mobclickcpphelper.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A55E21E1BFC495B001E09CD /* mobclickcpphelper.jar */; };
+		3A55E22E1BFC495B001E09CD /* libMobClickCpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A55E2201BFC495B001E09CD /* libMobClickCpp.a */; };
+		3A55E22F1BFC495B001E09CD /* libMobClickCpp_no_idfa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A55E2211BFC495B001E09CD /* libMobClickCpp_no_idfa.a */; };
+		3A55E2301BFC495B001E09CD /* lua_binding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A55E2231BFC495B001E09CD /* lua_binding.cpp */; };
+		3A55E2311BFC495B001E09CD /* LuaBasicConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A55E2251BFC495B001E09CD /* LuaBasicConversions.cpp */; };
+		3A55E2321BFC495B001E09CD /* MobClickForLua.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3A55E2281BFC495B001E09CD /* MobClickForLua.lua */; };
+		3A55E2331BFC495B001E09CD /* Lua版本集成文档.md in Sources */ = {isa = PBXBuildFile; fileRef = 3A55E2291BFC495B001E09CD /* Lua版本集成文档.md */; };
 		3A7B1BC91B786DE800822AC2 /* GameOverLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A7B1BC71B786DE800822AC2 /* GameOverLayer.cpp */; };
 		3A7B1BCA1B786DE800822AC2 /* GameOverLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A7B1BC71B786DE800822AC2 /* GameOverLayer.cpp */; };
 		3A7B1BCC1B7871AF00822AC2 /* gameoverBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7B1BCB1B7871AF00822AC2 /* gameoverBg.png */; };
@@ -260,6 +270,20 @@
 		3A07F8631B75885300E2021E /* blood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blood.png; sourceTree = "<group>"; };
 		3A07F8661B758B5200E2021E /* bloodSpurts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bloodSpurts.plist; sourceTree = "<group>"; };
 		3A55D3DF1B8E024200C55EC9 /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plane.png; sourceTree = "<group>"; };
+		3A55E2161BFC495B001E09CD /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		3A55E2181BFC495B001E09CD /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
+		3A55E21B1BFC495B001E09CD /* libmobclickcpp.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = libmobclickcpp.so; sourceTree = "<group>"; };
+		3A55E21D1BFC495B001E09CD /* libmobclickcpp.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = libmobclickcpp.so; sourceTree = "<group>"; };
+		3A55E21E1BFC495B001E09CD /* mobclickcpphelper.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = mobclickcpphelper.jar; sourceTree = "<group>"; };
+		3A55E2201BFC495B001E09CD /* libMobClickCpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickCpp.a; sourceTree = "<group>"; };
+		3A55E2211BFC495B001E09CD /* libMobClickCpp_no_idfa.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickCpp_no_idfa.a; sourceTree = "<group>"; };
+		3A55E2231BFC495B001E09CD /* lua_binding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_binding.cpp; sourceTree = "<group>"; };
+		3A55E2241BFC495B001E09CD /* lua_binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_binding.h; sourceTree = "<group>"; };
+		3A55E2251BFC495B001E09CD /* LuaBasicConversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaBasicConversions.cpp; sourceTree = "<group>"; };
+		3A55E2261BFC495B001E09CD /* LuaBasicConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaBasicConversions.h; sourceTree = "<group>"; };
+		3A55E2271BFC495B001E09CD /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
+		3A55E2281BFC495B001E09CD /* MobClickForLua.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MobClickForLua.lua; sourceTree = "<group>"; };
+		3A55E2291BFC495B001E09CD /* Lua版本集成文档.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Lua版本集成文档.md"; sourceTree = "<group>"; };
 		3A7B1BC71B786DE800822AC2 /* GameOverLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverLayer.cpp; sourceTree = "<group>"; };
 		3A7B1BC81B786DE800822AC2 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		3A7B1BCB1B7871AF00822AC2 /* gameoverBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverBg.png; sourceTree = "<group>"; };
@@ -363,11 +387,14 @@
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
 				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
+				3A55E22E1BFC495B001E09CD /* libMobClickCpp.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				3A55E22F1BFC495B001E09CD /* libMobClickCpp_no_idfa.a in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				3A55E22D1BFC495B001E09CD /* mobclickcpphelper.jar in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
@@ -431,6 +458,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				3A55E2121BFC495B001E09CD /* external */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -482,6 +510,100 @@
 				3AA1C5111B9090DF0043E510 /* OppositeGravityScene.h */,
 			);
 			name = Game;
+			sourceTree = "<group>";
+		};
+		3A55E2121BFC495B001E09CD /* external */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2131BFC495B001E09CD /* UMCocos2dxAnalyticsLua */,
+			);
+			name = external;
+			path = ../external;
+			sourceTree = "<group>";
+		};
+		3A55E2131BFC495B001E09CD /* UMCocos2dxAnalyticsLua */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2141BFC495B001E09CD /* android */,
+				3A55E21F1BFC495B001E09CD /* ios */,
+				3A55E2221BFC495B001E09CD /* lua_binding */,
+				3A55E2291BFC495B001E09CD /* Lua版本集成文档.md */,
+			);
+			path = UMCocos2dxAnalyticsLua;
+			sourceTree = "<group>";
+		};
+		3A55E2141BFC495B001E09CD /* android */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2151BFC495B001E09CD /* libmobclickcpp */,
+				3A55E21E1BFC495B001E09CD /* mobclickcpphelper.jar */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		3A55E2151BFC495B001E09CD /* libmobclickcpp */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2161BFC495B001E09CD /* Android.mk */,
+				3A55E2171BFC495B001E09CD /* include */,
+				3A55E2191BFC495B001E09CD /* libs */,
+			);
+			path = libmobclickcpp;
+			sourceTree = "<group>";
+		};
+		3A55E2171BFC495B001E09CD /* include */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2181BFC495B001E09CD /* MobClickCpp.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		3A55E2191BFC495B001E09CD /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E21A1BFC495B001E09CD /* armeabi */,
+				3A55E21C1BFC495B001E09CD /* armeabi-v7a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		3A55E21A1BFC495B001E09CD /* armeabi */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E21B1BFC495B001E09CD /* libmobclickcpp.so */,
+			);
+			path = armeabi;
+			sourceTree = "<group>";
+		};
+		3A55E21C1BFC495B001E09CD /* armeabi-v7a */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E21D1BFC495B001E09CD /* libmobclickcpp.so */,
+			);
+			path = "armeabi-v7a";
+			sourceTree = "<group>";
+		};
+		3A55E21F1BFC495B001E09CD /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2201BFC495B001E09CD /* libMobClickCpp.a */,
+				3A55E2211BFC495B001E09CD /* libMobClickCpp_no_idfa.a */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		3A55E2221BFC495B001E09CD /* lua_binding */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E2231BFC495B001E09CD /* lua_binding.cpp */,
+				3A55E2241BFC495B001E09CD /* lua_binding.h */,
+				3A55E2251BFC495B001E09CD /* LuaBasicConversions.cpp */,
+				3A55E2261BFC495B001E09CD /* LuaBasicConversions.h */,
+				3A55E2271BFC495B001E09CD /* MobClickCpp.h */,
+				3A55E2281BFC495B001E09CD /* MobClickForLua.lua */,
+			);
+			path = lua_binding;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {
@@ -745,6 +867,7 @@
 				3A07F8641B75885300E2021E /* blood.png in Resources */,
 				3AD0D1721B981F9900198D1B /* menu_difficult_sellect.png in Resources */,
 				3AB00BF61B74C1D400E76FE4 /* obstacle_rotation_long.png in Resources */,
+				3A55E22A1BFC495B001E09CD /* Android.mk in Resources */,
 				3A0565E71B8EF6FD00113EFB /* menu_0000.png in Resources */,
 				3AB00BE01B742FCF00E76FE4 /* bottom.png in Resources */,
 				3AB00BF11B74924E00E76FE4 /* obstacle_bar.png in Resources */,
@@ -754,6 +877,7 @@
 				3A8D384B1B9965AF00E821BA /* bg_country.mp3 in Resources */,
 				3A0566181B8F1C6000113EFB /* menu_0006.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
+				3A55E22C1BFC495B001E09CD /* libmobclickcpp.so in Resources */,
 				3AD0D1801B98278B00198D1B /* menu_exit_btn.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				3AD6E9221B763AE80015529C /* faster.png in Resources */,
@@ -775,9 +899,11 @@
 				3A962F2A1B93446A0080F9FB /* setting.png in Resources */,
 				3A7B1BD21B7871DD00822AC2 /* button.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
+				3A55E2321BFC495B001E09CD /* MobClickForLua.lua in Resources */,
 				3A7B1BE11B7895FB00822AC2 /* new.png in Resources */,
 				3A0565F71B8EF6FD00113EFB /* menu_bg2.png in Resources */,
 				3AD0D1741B981F9900198D1B /* menu_yinxiao.png in Resources */,
+				3A55E22B1BFC495B001E09CD /* libmobclickcpp.so in Resources */,
 				3AB00BED1B74407A00E76FE4 /* obstacle.png in Resources */,
 				3AB00BFB1B74C91200E76FE4 /* obstacle_rotation_sort_right.png in Resources */,
 				3AD6E9281B763AE80015529C /* ready.png in Resources */,
@@ -871,6 +997,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A55E2311BFC495B001E09CD /* LuaBasicConversions.cpp in Sources */,
+				3A55E2331BFC495B001E09CD /* Lua版本集成文档.md in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				3A0566341B8F4BB000113EFB /* DarkScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -879,6 +1007,7 @@
 				3A7B1BC91B786DE800822AC2 /* GameOverLayer.cpp in Sources */,
 				3A0566301B8F4B8900113EFB /* TwinkleScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				3A55E2301BFC495B001E09CD /* lua_binding.cpp in Sources */,
 				3AD0D1871B982C7300198D1B /* SettingScene.cpp in Sources */,
 				3AA1C5121B9090DF0043E510 /* OppositeGravityScene.cpp in Sources */,
 				3A0565D51B8ED3C000113EFB /* ElasticityScene.cpp in Sources */,
