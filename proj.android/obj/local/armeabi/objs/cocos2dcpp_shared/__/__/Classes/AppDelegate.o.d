@@ -384,7 +384,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/AppDelegate.o: \
  jni/../../cocos2d/cocos/3d/../ui/UIScale9Sprite.h \
  jni/../../cocos2d/cocos/3d/../ui/UIEditBox/UIEditBox.h \
  jni/../../cocos2d/cocos/3d/../ui/UILayoutComponent.h \
- jni/../../cocos2d/cocos/3d/../2d/CCComponent.h
+ jni/../../cocos2d/cocos/3d/../2d/CCComponent.h \
+ jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -1157,3 +1158,5 @@ jni/../../cocos2d/cocos/3d/../ui/UIEditBox/UIEditBox.h:
 jni/../../cocos2d/cocos/3d/../ui/UILayoutComponent.h:
 
 jni/../../cocos2d/cocos/3d/../2d/CCComponent.h:
+
+jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h:

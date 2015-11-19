@@ -388,7 +388,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/SettingScene.o: \
  jni/../../cocos2d/cocos/3d/../2d/CCComponent.h \
  jni/../../cocos2d/cocos/3d/../ui/CocosGui.h \
  jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h \
- jni/../../cocos2d/cocos/audio/android/../include/Export.h
+ jni/../../cocos2d/cocos/audio/android/../include/Export.h \
+ jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h
 
 jni/../../Classes/SettingScene.h:
 
@@ -1169,3 +1170,5 @@ jni/../../cocos2d/cocos/3d/../ui/CocosGui.h:
 jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h:
 
 jni/../../cocos2d/cocos/audio/android/../include/Export.h:
+
+jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h:

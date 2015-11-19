@@ -32,6 +32,8 @@ import java.io.InputStream;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import com.umeng.mobclickcpp.MobClickCppHelper;
+
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
@@ -43,12 +45,26 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 public class AppActivity extends Cocos2dxActivity {
 	private long mkeyTime = 0;
+
+	static {
+		MobClickCppHelper.loadLibrary();
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		//umeng 数据统计
+		MobClickCppHelper.init(this);
+
+	}
 
 	// 双击退出
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -58,12 +74,12 @@ public class AppActivity extends Cocos2dxActivity {
 				Toast.makeText(this, "再按一次退出", Toast.LENGTH_LONG).show();
 				onDestroy();
 				showShare();
-//				try {
-//					String url="file:///android_asset/DayDayUp.png";
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				// try {
+				// String url="file:///android_asset/DayDayUp.png";
+				// } catch (IOException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
 			} else {
 				finish();
 				System.exit(0);
@@ -87,8 +103,8 @@ public class AppActivity extends Cocos2dxActivity {
 		// text是分享文本，所有平台都需要这个字段
 		oks.setText("我是分享文本");
 		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-//		String url="file:///android_asset/DayDayUp.png";
-//		oks.setImagePath(url);// 确保SDcard下面存在此张图片
+		// String url="file:///android_asset/DayDayUp.png";
+		// oks.setImagePath(url);// 确保SDcard下面存在此张图片
 		oks.setImagePath("/sdcard/DayDayUp.png");// 确保SDcard下面存在此张图片
 		// url仅在微信（包括好友和朋友圈）中使用
 		oks.setUrl("http://sharesdk.cn");

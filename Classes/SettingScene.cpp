@@ -9,6 +9,7 @@
 #include "SettingScene.h"
 #include "ui/CocosGui.h"
 #include "SimpleAudioEngine.h"
+#include "MobClickCpp.h"
 
 using namespace ui;
 using namespace CocosDenshion;
@@ -140,7 +141,7 @@ void Setting::exit(cocos2d::Ref* pSender, Widget::TouchEventType type) {
         MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
         return;
 #endif
-
+        umeng::MobClickCpp::end();
         Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
