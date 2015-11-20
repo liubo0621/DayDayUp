@@ -1,0 +1,45 @@
+#android
+bin
+gen
+obj
+proj.android/libs/armeabi
+assets
+proguard
+local.properties
+*.apk
+.settings
+
+# ios
+build
+xcuserdata
+*.perspectivev3
+*.pbxuser
+*.DS_Store
+.svn
+*.xcuserstate
+*.xcsettings
+
+# from cocoapods
+Pod*
+*.xcworkspace
+
+# vin32
+Debug.win32
+Release.win32
+Debug.obj
+Release.obj
+*.pdb
+*.aps
+*.user
+*.sdf
+*.opensdf
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+
+#runtime
+cocos2d-x

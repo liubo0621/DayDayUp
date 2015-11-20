@@ -33,6 +33,7 @@ import java.io.InputStream;
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import com.umeng.mobclickcpp.MobClickCppHelper;
+import com.umeng.update.UmengUpdateAgent;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -63,6 +64,10 @@ public class AppActivity extends Cocos2dxActivity {
 		super.onCreate(savedInstanceState);
 		//umeng 数据统计
 		MobClickCppHelper.init(this);
+
+		//umeng  自动更新
+		UmengUpdateAgent.setUpdateOnlyWifi(false);
+		UmengUpdateAgent.update(this);
 
 	}
 
