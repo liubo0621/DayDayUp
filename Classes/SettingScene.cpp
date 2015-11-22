@@ -10,6 +10,8 @@
 #include "ui/CocosGui.h"
 #include "SimpleAudioEngine.h"
 #include "MobClickCpp.h"
+#include "DialogueLayer.h"
+#include "Life.h"
 
 using namespace ui;
 using namespace CocosDenshion;
@@ -18,6 +20,7 @@ bool Setting::init() {
     if (!Layer::init()) {
         return false;
     }
+
     visibleSize = Director::getInstance()->getVisibleSize();
 
     //***************音效*******************
@@ -137,15 +140,27 @@ bool Setting::init() {
 
 void Setting::exit(cocos2d::Ref* pSender, Widget::TouchEventType type) {
     if (type == Widget::TouchEventType::ENDED) {
+        auto dialogue = DialogueLayer::create();
+        addChild(dialogue, 100);
+        dialogue->setTitle("确定退出嘛？");
+        dialogue->setLeftBtnText("确定");
+        dialogue->setRightBtnText("取消");
+
+        dialogue->rightCallback = [=]() { dialogue->removeFromParent(); };
+
+        dialogue->leftCallback = []() {
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-        MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
-        return;
+            MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
+            return;
 #endif
-        umeng::MobClickCpp::end();
-        Director::getInstance()->end();
+            umeng::MobClickCpp::end();
+            Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        ::exit(0);
+            ::exit(0);
 #endif
+
+        };
     }
 }
