@@ -393,7 +393,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/MenuScene.o: \
  jni/../../Classes/TwinkleScene.h jni/../../Classes/DarkScene.h \
  jni/../../Classes/OppositeGravityScene.h \
  jni/../../Classes/SettingScene.h \
- jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h
+ jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h \
+ jni/../../Classes/CustomerJniHelper.h
 
 jni/../../Classes/MenuScene.h:
 
@@ -1190,3 +1191,5 @@ jni/../../Classes/OppositeGravityScene.h:
 jni/../../Classes/SettingScene.h:
 
 jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h:
+
+jni/../../Classes/CustomerJniHelper.h:

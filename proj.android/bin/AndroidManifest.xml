@@ -36,6 +36,14 @@
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
 
+    <!-- 百通广告 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于记录uid -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
@@ -50,6 +58,23 @@
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
+
+        <!-- 百通广告 -->
+        <activity
+            android:name="com.baidu.ops.appunion.sdk.activity.AppListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.baidu.ops.appunion.sdk.activity.WebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <service
+            android:name="com.baidu.ops.appunion.sdk.service.AppUnionService"
+            android:exported="false"
+            android:label="AppUnionService" />
+
+        <meta-data
+            android:name="BDAPPUNIONSDK_APIKEY"
+            android:value="1003647a" />
 
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data

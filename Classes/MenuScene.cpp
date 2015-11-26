@@ -15,6 +15,7 @@
 #include "OppositeGravityScene.h"
 #include "SettingScene.h"
 #include "MobClickCpp.h"
+#include "CustomerJniHelper.h"
 
 Scene* MenuScene::createScene() {
     auto scene = Scene::createWithPhysics();
@@ -28,6 +29,13 @@ bool MenuScene::init() {
     if (!Layer::init()) {
         return false;
     }
+
+//广告
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    if (arc4random() % 3 == 0) {
+        CustomerJniHelper::getInstance()->callJavaMethod(-3);  //清除横幅
+    }
+#endif
 
     visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -243,6 +251,12 @@ void MenuScene::addBtn(cocos2d::Vec2 position, string btnName, string textName) 
     //事件
     btn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
         if (type == Widget::TouchEventType::ENDED) {
+//广告
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+            if (arc4random() % 3 == 0) {
+                CustomerJniHelper::getInstance()->callJavaMethod(-1);  //横幅
+            }
+#endif
             if (textName == "menu_0008.png") {
                 UserDefault::getInstance()->setStringForKey("model", "正常模式");
                 umeng::MobClickCpp::beginLogPageView("normal");

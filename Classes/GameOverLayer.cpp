@@ -27,6 +27,14 @@ bool GameOver::init() {
     if (!Layer::init()) {
         return false;
     }
+
+//广告
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    if (arc4random() % 3 == 0) {
+        CustomerJniHelper::getInstance()->callJavaMethod(-2);  //插屏
+    }
+#endif
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
     auto bg = Sprite::create("gameoverBg.png");
