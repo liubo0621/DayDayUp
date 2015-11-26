@@ -35,7 +35,7 @@ public:
 protected:
     void recoverLife(float dt);
 
-    // private:
+private:
     int _life;
     int _recoverTime;
 

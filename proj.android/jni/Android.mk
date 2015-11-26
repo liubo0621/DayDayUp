@@ -21,6 +21,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameOverLayer.cpp \
                    ../../Classes/MenuScene.cpp \
                    ../../Classes/SettingScene.cpp \
+                   ../../Classes/CustomerJniHelper.cpp \
+                   ../../Classes/Life.cpp \
+                   ../../Classes/DialogueLayer.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

@@ -279,6 +279,7 @@
 		3A55D3DF1B8E024200C55EC9 /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plane.png; sourceTree = "<group>"; };
 		3A55E2271BFC495B001E09CD /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
 		3A55E2291BFC495B001E09CD /* Lua版本集成文档.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Lua版本集成文档.md"; sourceTree = "<group>"; };
+		3A55E91E1C036F9D00423C27 /* CustomerJniHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerJniHelper.h; sourceTree = "<group>"; };
 		3A7B1BC71B786DE800822AC2 /* GameOverLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverLayer.cpp; sourceTree = "<group>"; };
 		3A7B1BC81B786DE800822AC2 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		3A7B1BCB1B7871AF00822AC2 /* gameoverBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameoverBg.png; sourceTree = "<group>"; };
@@ -508,6 +509,7 @@
 		3A2A70441C002DEF00C4F97F /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				3A55E91C1C036F4500423C27 /* android */,
 				3A2A70451C002F2400C4F97F /* Life.cpp */,
 				3A2A70461C002F2400C4F97F /* Life.h */,
 			);
@@ -547,6 +549,14 @@
 				3A55E2271BFC495B001E09CD /* MobClickCpp.h */,
 			);
 			path = lua_binding;
+			sourceTree = "<group>";
+		};
+		3A55E91C1C036F4500423C27 /* android */ = {
+			isa = PBXGroup;
+			children = (
+				3A55E91E1C036F9D00423C27 /* CustomerJniHelper.h */,
+			);
+			name = android;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {

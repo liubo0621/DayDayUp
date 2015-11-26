@@ -385,7 +385,10 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/AppDelegate.o: \
  jni/../../cocos2d/cocos/3d/../ui/UIEditBox/UIEditBox.h \
  jni/../../cocos2d/cocos/3d/../ui/UILayoutComponent.h \
  jni/../../cocos2d/cocos/3d/../2d/CCComponent.h \
- jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h
+ jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h \
+ jni/../../Classes/Life.h jni/../../Classes/DialogueLayer.h \
+ jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h \
+ jni/../../cocos2d/cocos/audio/android/../include/Export.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -1160,3 +1163,11 @@ jni/../../cocos2d/cocos/3d/../ui/UILayoutComponent.h:
 jni/../../cocos2d/cocos/3d/../2d/CCComponent.h:
 
 jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h:
+
+jni/../../Classes/Life.h:
+
+jni/../../Classes/DialogueLayer.h:
+
+jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h:
+
+jni/../../cocos2d/cocos/audio/android/../include/Export.h:

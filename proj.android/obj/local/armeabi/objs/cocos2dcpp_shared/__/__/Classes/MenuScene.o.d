@@ -388,10 +388,12 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/MenuScene.o: \
  jni/../../Classes/NormalScene.h \
  jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h \
  jni/../../cocos2d/cocos/audio/android/../include/Export.h \
+ jni/../../Classes/Life.h jni/../../Classes/DialogueLayer.h \
  jni/../../Classes/ElasticityScene.h jni/../../Classes/TimeScene.h \
  jni/../../Classes/TwinkleScene.h jni/../../Classes/DarkScene.h \
  jni/../../Classes/OppositeGravityScene.h \
- jni/../../Classes/SettingScene.h
+ jni/../../Classes/SettingScene.h \
+ jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h
 
 jni/../../Classes/MenuScene.h:
 
@@ -1171,6 +1173,10 @@ jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h:
 
 jni/../../cocos2d/cocos/audio/android/../include/Export.h:
 
+jni/../../Classes/Life.h:
+
+jni/../../Classes/DialogueLayer.h:
+
 jni/../../Classes/ElasticityScene.h:
 
 jni/../../Classes/TimeScene.h:
@@ -1182,3 +1188,5 @@ jni/../../Classes/DarkScene.h:
 jni/../../Classes/OppositeGravityScene.h:
 
 jni/../../Classes/SettingScene.h:
+
+jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h:

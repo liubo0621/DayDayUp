@@ -34,7 +34,7 @@ void AppDelegate::recoverLife() {
     if (end_time != 0) {
         int interval_time = (now_time - end_time) / RECOVER_TIME;
         log("interval_time %d", interval_time);
-        int life = UserDefault::getInstance()->getIntegerForKey("life");
+        int life = UserDefault::getInstance()->getIntegerForKey("life", MAX_LIFE);
         int newLife = life + interval_time;
         if (newLife <= MAX_LIFE) {
             UserDefault::getInstance()->setIntegerForKey("life", newLife);

@@ -7,6 +7,8 @@
 //
 
 #include "Life.h"
+#include "CustomerJniHelper.h"
+#include "MobClickCpp.h"
 
 #define MAX_LIFE 15
 #define RECOVER_TIME 120
@@ -28,7 +30,6 @@ bool Life::init() {
     _lifeSprite->setPosition(5, visibleSize.height - 5);
     this->addChild(_lifeSprite, 20);
     //体力值
-    //    UserDefault::getInstance()->setIntegerForKey("life", 1);
     _life = UserDefault::getInstance()->getIntegerForKey("life", MAX_LIFE);
     _lifeLabel = Label::createWithSystemFont(StringUtils::format("%d", _life), "", 200);
     _lifeLabel->setAnchorPoint(Vec2::ZERO);
@@ -108,9 +109,19 @@ void Life::showDialogue() {
     _dialogue->setLeftBtnText("分享");
     _dialogue->setRightBtnText("广告");
 
-    _dialogue->rightCallback = [=]() {};
+    _dialogue->leftCallback = [=]() {
+        umeng::MobClickCpp::event("click_dialogue", "分享");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        auto model = UserDefault::getInstance()->getStringForKey("model");
+        auto difficuty = UserDefault::getInstance()->getStringForKey("difficulty", "简单");
+        std::string model_bestScore = model + difficuty;
+        auto bestScore = UserDefault::getInstance()->getIntegerForKey(model_bestScore.c_str(), 0);
+        CustomerJniHelper::getInstance()->callJavaMethod(bestScore);
+#endif
 
-    _dialogue->leftCallback = []() {};
+    };
+
+    _dialogue->rightCallback = []() { umeng::MobClickCpp::event("click_dialogue", "广告"); };
 }
 
 void Life::showCountdown(float dt) {

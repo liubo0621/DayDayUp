@@ -74,8 +74,8 @@ void DialogueLayer::setTitle(const char *title, int size) {
     label->setSystemFontSize(size);
     label->setDimensions(_dialogue->getContentSize().width * 0.9, _dialogue->getContentSize().height * 0.6);
     //    label->setColor(Color3B::RED);
-    //    label->setHorizontalAlignment(TextHAlignment::CENTER);  //水平
-    label->setVerticalAlignment(TextVAlignment::CENTER);  //垂直
+    label->setHorizontalAlignment(TextHAlignment::CENTER);  //水平
+    label->setVerticalAlignment(TextVAlignment::CENTER);    //垂直
     label->setContentSize(_dialogue->getContentSize());
     _dialogue->addChild(label);
     label->setPosition(_dialogue->getContentSize().width / 2, _dialogue->getContentSize().height * 0.6);

@@ -16,6 +16,7 @@
 #include "DarkScene.h"
 #include "OppositeGravityScene.h"
 #include "MobClickCpp.h"
+#include "CustomerJniHelper.h"
 
 #include <iostream>
 
@@ -134,6 +135,9 @@ bool GameOver::init() {
     shareBtn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
         if (type == Widget::TouchEventType::ENDED) {
             log("share...");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+            CustomerJniHelper::getInstance()->callJavaMethod(bestScore);
+#endif
         }
     });
 
@@ -162,7 +166,8 @@ bool GameOver::init() {
 
     gohomeBtn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
         if (type == Widget::TouchEventType::ENDED) {
-            umeng::MobClickCpp::endLogPageView(model.c_str());
+            log("离开%s", model.c_str());
+            umeng::MobClickCpp::endLogPageView(gameModel);
             Director::getInstance()->replaceScene(MenuScene::createScene());
         }
     });

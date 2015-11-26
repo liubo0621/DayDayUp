@@ -245,32 +245,32 @@ void MenuScene::addBtn(cocos2d::Vec2 position, string btnName, string textName) 
         if (type == Widget::TouchEventType::ENDED) {
             if (textName == "menu_0008.png") {
                 UserDefault::getInstance()->setStringForKey("model", "正常模式");
-                umeng::MobClickCpp::beginLogPageView("正常模式");
+                umeng::MobClickCpp::beginLogPageView("normal");
                 Director::getInstance()->replaceScene(Game::createScene());
             }
             if (textName == "menu_0012.png") {
                 UserDefault::getInstance()->setStringForKey("model", "弹力模式");
-                umeng::MobClickCpp::beginLogPageView("弹力模式");
+                umeng::MobClickCpp::beginLogPageView("elasticity");
                 Director::getInstance()->replaceScene(ElasticityModel::createScene());
             }
             if (textName == "menu_0004.png") {
                 UserDefault::getInstance()->setStringForKey("model", "时间模式");
-                umeng::MobClickCpp::beginLogPageView("时间模式");
+                umeng::MobClickCpp::beginLogPageView("time");
                 Director::getInstance()->replaceScene(TimeModel::createScene());
             }
             if (textName == "menu_0006.png") {
                 UserDefault::getInstance()->setStringForKey("model", "闪烁模式");
-                umeng::MobClickCpp::beginLogPageView("闪烁模式");
+                umeng::MobClickCpp::beginLogPageView("blink");
                 Director::getInstance()->replaceScene(TwinkleModel::createScene());
             }
             if (textName == "menu_0010.png") {
                 UserDefault::getInstance()->setStringForKey("model", "暗黑模式");
-                umeng::MobClickCpp::beginLogPageView("暗黑模式");
+                umeng::MobClickCpp::beginLogPageView("dark");
                 Director::getInstance()->replaceScene(DarkModel::createScene());
             }
             if (textName == "menu_0013.png") {
                 UserDefault::getInstance()->setStringForKey("model", "反重力模式");
-                umeng::MobClickCpp::beginLogPageView("反重力模式");
+                umeng::MobClickCpp::beginLogPageView("opposite_gravity");
                 Director::getInstance()->replaceScene(OppositeGravityModel::createScene());
             }
             SimpleAudioEngine::getInstance()->stopBackgroundMusic();

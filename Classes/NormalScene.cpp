@@ -33,9 +33,9 @@ bool Game::init() {
     _bestScoreOnShow = false;
     _obstacles.clear();
 
-    //体力Label
-    _life = Life::create();
-    addChild(_life, 20);
+    //    //体力Label
+    //    _life = Life::create();
+    //    addChild(_life, 20);
 
     //背景
     auto bg = Sprite::create("bg.png");
@@ -174,12 +174,12 @@ void Game::onEnter() {
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = [=](Touch *touch, Event *event) {
         if (_firstTouch) {
-            //减体力
-            if (_life->getLife() <= 0) {
-                _life->showDialogue();  //为了显示提示框
-                return false;
-            }
-            _life->reduceLife();
+            //            //减体力
+            //            if (_life->getLife() <= 0) {
+            //                _life->showDialogue();  //为了显示提示框
+            //                return false;
+            //            }
+            //            _life->reduceLife();
 
             _firstTouch = false;
             auto moveOut = MoveTo::create(0.2, Vec2(_visibleSize.width / 2, _visibleSize.height + _ready_go->getContentSize().height / 2));
