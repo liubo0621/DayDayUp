@@ -62,15 +62,15 @@ bool MenuScene::init() {
 
     //天天向上
     auto day1 = Sprite::create("menu_0000.png");
-    day1->setPosition(visibleSize.width * 0.2, visibleSize.height * 0.8);
+    day1->setPosition(visibleSize.width * 0.2, visibleSize.height * 0.78);
     this->addChild(day1);
 
     auto day2 = Sprite::create("menu_0001.png");
-    day2->setPosition(visibleSize.width * 0.38, visibleSize.height * 0.8);
+    day2->setPosition(visibleSize.width * 0.4, visibleSize.height * 0.8);
     this->addChild(day2);
 
     auto go = Sprite::create("menu_0002.png");
-    go->setPosition(visibleSize.width * 0.6, visibleSize.height * 0.8);
+    go->setPosition(visibleSize.width * 0.6, visibleSize.height * 0.78);
     this->addChild(go);
 
     auto up = Sprite::create("menu_0003.png");
