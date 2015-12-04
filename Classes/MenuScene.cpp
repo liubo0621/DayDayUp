@@ -32,9 +32,7 @@ bool MenuScene::init() {
 
 //广告
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    if (arc4random() % 3 == 0) {
-        CustomerJniHelper::getInstance()->callJavaMethod(-3);  //清除横幅
-    }
+    CustomerJniHelper::getInstance()->callJavaMethod(-3);  //清除横幅
 #endif
 
     visibleSize = Director::getInstance()->getVisibleSize();
@@ -253,9 +251,7 @@ void MenuScene::addBtn(cocos2d::Vec2 position, string btnName, string textName) 
         if (type == Widget::TouchEventType::ENDED) {
 //广告
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            if (arc4random() % 3 == 0) {
-                CustomerJniHelper::getInstance()->callJavaMethod(-1);  //横幅
-            }
+            CustomerJniHelper::getInstance()->callJavaMethod(-1);  //横幅
 #endif
             if (textName == "menu_0008.png") {
                 UserDefault::getInstance()->setStringForKey("model", "正常模式");

@@ -19,6 +19,15 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
+    <!-- 广点通 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- umeng 数据统记 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
     </uses-permission>
@@ -59,6 +68,15 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
 
+        <!-- 广点通 -->
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" />
+
+        <activity
+            android:name="com.qq.e.ads.ADActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
         <!-- 百通广告 -->
         <activity
             android:name="com.baidu.ops.appunion.sdk.activity.AppListActivity"
@@ -80,7 +98,7 @@
         <meta-data
             android:name="android.app.lib_name"
             android:value="cocos2dcpp" />
-        <!-- meng check update -->
+        <!-- umeng check update -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="560f92fe67e58e56b3001f9d" />
@@ -93,6 +111,15 @@
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+       <!--      <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+        <activity
+            android:name="org.cocos2dx.cpp.SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

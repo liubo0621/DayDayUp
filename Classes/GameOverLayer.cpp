@@ -30,7 +30,7 @@ bool GameOver::init() {
 
 //广告
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    if (arc4random() % 3 == 0) {
+    if (arc4random() % 2 == 0) {
         CustomerJniHelper::getInstance()->callJavaMethod(-2);  //插屏
     }
 #endif

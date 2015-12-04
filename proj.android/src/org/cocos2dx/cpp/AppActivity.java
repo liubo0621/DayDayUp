@@ -3,7 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,6 +38,13 @@ import com.baidu.ops.appunion.sdk.AppUnionSDK;
 import com.baidu.ops.appunion.sdk.InterstitialAdListener;
 import com.baidu.ops.appunion.sdk.banner.BaiduBanner;
 import com.baidu.ops.appunion.sdk.banner.BannerType;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner.BannerView;
+import com.qq.e.ads.interstitial.AbstractInterstitialADListener;
+import com.qq.e.ads.interstitial.InterstitialAD;
+import com.qq.e.ads.splash.SplashAD;
+import com.qq.e.ads.splash.SplashADListener;
 import com.umeng.mobclickcpp.MobClickCppHelper;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -57,21 +64,31 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.RelativeLayout;
 
 public class AppActivity extends Cocos2dxActivity {
     private long mkeyTime = 0;
+
     static {
         MobClickCppHelper.loadLibrary();
     }
 
-    BaiduBanner mBaiduBanner_Image;
-    BaiduBanner mBaiduBanner_Image_Text;
+    // 百通
+    private BaiduBanner mBaiduBanner_Image;
+    private BaiduBanner mBaiduBanner_Image_Text;
+    // 广点通
+    private FrameLayout bannerContainer;
+    private BannerView bv;
+    private InterstitialAD iad;
+    private SplashAD splashAD;
 
     // 调用广告
     private Handler aHandler = new Handler() {
@@ -79,10 +96,10 @@ public class AppActivity extends Cocos2dxActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case -1:
-                addBannerAd();//百通横幅
+                showBannerAD();
                 break;
             case -2:
-                addInstertAd();//百通插屏
+                showInterstitialAD();
                 break;
             case -3:
                 deleteBannerAd();
@@ -93,7 +110,7 @@ public class AppActivity extends Cocos2dxActivity {
             }
         }
     };
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -105,36 +122,8 @@ public class AppActivity extends Cocos2dxActivity {
         UmengUpdateAgent.update(this);
         JNIHelper.init(aHandler);
 
-        // 百通广告
-        AppUnionSDK.getInstance(AppActivity.this).initSdk();
-      //插屏预加载代码
-        AppUnionSDK.getInstance(AppActivity.this)
-        .loadInterstitialAd(AppActivity.this,
-                new InterstitialAdListener() {
-
-                    @Override
-                    public void onAdReady() {
-                        // TODO Auto-generated method stub
-                    }
-
-                    @Override
-                    public void onAdPresent() {
-                        // TODO Auto-generated method stub
-
-                    }
-
-                    @Override
-                    public void onAdFailed(String reason) {
-                        // TODO Auto-generated method stub
-
-                    }
-
-                    @Override
-                    public void onAdDismissed() {
-                        // TODO Auto-generated method stub
-
-                    }
-                }, false);
+        // 初始化广告
+        initBT();
     }
 
     private void showShare(int n) {
@@ -145,11 +134,11 @@ public class AppActivity extends Cocos2dxActivity {
         // 分享时Notification的图标和文字 2.5.9以后的版本不调用此方法
         // oks.setNotification(R.drawable.ic_launcher,getString(R.string.app_name);
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle("小球特烦恼");
+        oks.setTitle("一发不止");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.liubo.DayDayUp");
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("玩了下《小球特烦恼》这个游，感觉超虐啊，得" + n + "分真不容易，来炫耀下！");
+        oks.setText("玩了下《一发不止》这个游，感觉超虐啊，得" + n + "分真不容易，来炫耀下！");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         // String url="file:///android_asset/DayDayUp.png";
         // oks.setImagePath(url);// 确保SDcard下面存在此张图片
@@ -159,7 +148,7 @@ public class AppActivity extends Cocos2dxActivity {
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
         oks.setComment("还不错哦！");
         // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite("小球特烦恼");
+        oks.setSite("一发不止");
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.liubo.DayDayUp");
 
@@ -169,7 +158,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     /**
      * 分享功能
-     * 
+     *
      * @param context
      *            上下文
      * @param activityTitle
@@ -200,7 +189,7 @@ public class AppActivity extends Cocos2dxActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, activityTitle));
     }
-    
+
     // 分享照片
     public void SharePhoto(String photoUri, final Activity activity) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -210,66 +199,183 @@ public class AppActivity extends Cocos2dxActivity {
         startActivity(Intent.createChooser(shareIntent, activity.getTitle()));
     }
 
-    // 双击退出
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if ((System.currentTimeMillis() - mkeyTime) > 2000) {
-                mkeyTime = System.currentTimeMillis();
-                Toast.makeText(this, "再按一次退出", Toast.LENGTH_LONG).show();
-                onDestroy();
-            } else {
-                finish();
-                System.exit(0);
-            }
-            return false;
+    // 展示广告
+    public void showBannerAD() {
+        addBTBannerAD();
+        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
+            addGDTbannerAD();
         }
-        return super.onKeyDown(keyCode, event);
     }
 
-    //百通
-    public void addBannerAd() {
-        if (mBaiduBanner_Image == null
-                || mBaiduBanner_Image.getVisibility() == View.GONE) {
+    public void showInterstitialAD() {
+        // TODO Auto-generated method stub
+        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
+            addGDTInterstitialAD();
+        }else{
+            addBTInterstitialAD();
+        }
+    }
+
+    public void deleteBannerAd() {
+        // TODO Auto-generated method stub
+        doCloseGDTBanner();
+        doCloseBTBannerAD();
+    }
+
+    // 百通
+    private void initBT() {
+        // 百通广告
+        AppUnionSDK.getInstance(AppActivity.this).initSdk();
+        // 插屏预加载代码
+        AppUnionSDK.getInstance(AppActivity.this).loadInterstitialAd(AppActivity.this, new InterstitialAdListener() {
+
+            @Override
+            public void onAdReady() {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onAdPresent() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAdFailed(String reason) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAdDismissed() {
+                // TODO Auto-generated method stub
+
+            }
+        }, false);
+
+    }
+
+    public void addBTBannerAD() {
+        if (mBaiduBanner_Image == null || mBaiduBanner_Image.getVisibility() == View.GONE) {
 
             if (mBaiduBanner_Image_Text != null) {
-                mBaiduBanner_Image_Text
-                        .setVisibility(View.GONE);
+                mBaiduBanner_Image_Text.setVisibility(View.GONE);
             }
 
-            FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            lytp.gravity = Gravity.BOTTOM
-                    | Gravity.CENTER_HORIZONTAL;
-            mBaiduBanner_Image = new BaiduBanner(
-                    AppActivity.this);
-            mBaiduBanner_Image
-                    .setBannerType(BannerType.IMAGE_ONLY);
-            AppActivity.this.addContentView(
-                    mBaiduBanner_Image, lytp);
+            lytp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+            mBaiduBanner_Image = new BaiduBanner(AppActivity.this);
+            mBaiduBanner_Image.setBannerType(BannerType.IMAGE_ONLY);
+            AppActivity.this.addContentView(mBaiduBanner_Image, lytp);
         }
     }
 
-    public void deleteBannerAd(){
-        if(mBaiduBanner_Image != null){
+    public void doCloseBTBannerAD() {
+        if (mBaiduBanner_Image != null) {
             mBaiduBanner_Image.setVisibility(View.GONE);
         }
     }
 
-    public void addInstertAd() {
-        System.out.println("插屏广告");
-        if (AppUnionSDK.getInstance(AppActivity.this)
-                .isInterstitialAdReady()) {
-            AppUnionSDK.getInstance(AppActivity.this)
-                    .showInterstitialAd();
-            System.out.println("展示插屏广告");
+    public void addBTInterstitialAD() {
+        if (AppUnionSDK.getInstance(AppActivity.this).isInterstitialAdReady()) {
+            AppUnionSDK.getInstance(AppActivity.this).showInterstitialAd();
         }
+    }
+
+    // 广点通
+    private void initGDTBanner() {
+        this.bv = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
+        bv.setRefresh(30);
+        bv.setADListener(new AbstractBannerADListener() {
+
+            @Override
+            public void onNoAD(int arg0) {
+                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+            }
+
+            @Override
+            public void onADReceiv() {
+                Log.i("AD_DEMO", "ONBannerReceive");
+            }
+        });
+        bannerContainer = new FrameLayout(this);
+        FrameLayout.LayoutParams bannerContainerParame = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+        bannerContainerParame.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        this.addContentView(bannerContainer, bannerContainerParame);
+    }
+
+    public void addGDTbannerAD() {
+        if (bv == null) {
+            initGDTBanner();
+            bannerContainer.addView(bv);
+        }
+        bv.loadAD();
+    }
+
+    private void doCloseGDTBanner() {
+        if (bv!=null) {
+            bannerContainer.removeAllViews();
+            bv.destroy();
+            bv = null;
+        }
+    }
+
+    public void addGDTInterstitialAD() {
+        if (iad == null) {
+            iad = new InterstitialAD(this, Constants.APPID, Constants.InterteristalPosID);
+        }
+        iad.setADListener(new AbstractInterstitialADListener() {
+
+            @Override
+            public void onNoAD(int arg0) {
+                Log.i("AD_DEMO", "LoadInterstitialAd Fail:" + arg0);
+            }
+
+            @Override
+            public void onADReceive() {
+                iad.show();
+            }
+        });
+        iad.loadAD();
+    }
+
+    public void addGDTSplashAD() {
+        FrameLayout rl = new FrameLayout(this);
+        FrameLayout.LayoutParams rlParame = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,
+                LayoutParams.FILL_PARENT);
+        this.addContentView(bannerContainer, rlParame);
+        splashAD = new SplashAD(this, rl, Constants.APPID, Constants.SplashPosID, (SplashADListener) this);
+    }
+
+    // 退出
+    // 双击退出
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // if (keyCode == KeyEvent.KEYCODE_BACK) {
+        // if ((System.currentTimeMillis() - mkeyTime) > 2000) {
+        // mkeyTime = System.currentTimeMillis();
+        // Toast.makeText(this, "再按一次退出", Toast.LENGTH_LONG).show();
+        // onDestroy();
+        // } else {
+        // finish();
+        // System.exit(0);
+        // }
+        // return false;
+        // }
+        // return super.onKeyDown(keyCode, event);
+        return false;
     }
 
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
-        AppUnionSDK.getInstance(this).quitSdk();
         super.onDestroy();
+        // 百通
+        AppUnionSDK.getInstance(this).quitSdk();
+
+        // 销毁广点通banner
+        bv.destroy();
+        bv = null;
     }
 }
