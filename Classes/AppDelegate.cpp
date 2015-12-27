@@ -55,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     umengAppKey = "560f92fe67e58e56b3001f9d";
 #endif
-    MOBCLICKCPP_START_WITH_APPKEY_AND_CHANNEL(umengAppKey, "liubo");
+    MOBCLICKCPP_START_WITH_APPKEY_AND_CHANNEL(umengAppKey, "xiaomi");
 
     // initialize director
     auto director = Director::getInstance();

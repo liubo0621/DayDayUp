@@ -76,6 +76,7 @@ import android.widget.RelativeLayout;
 
 public class AppActivity extends Cocos2dxActivity {
     private long mkeyTime = 0;
+    private static boolean isShowBTbanner = false;
 
     static {
         MobClickCppHelper.loadLibrary();
@@ -83,12 +84,10 @@ public class AppActivity extends Cocos2dxActivity {
 
     // 百通
     private BaiduBanner mBaiduBanner_Image;
-    private BaiduBanner mBaiduBanner_Image_Text;
     // 广点通
     private FrameLayout bannerContainer;
     private BannerView bv;
     private InterstitialAD iad;
-    private SplashAD splashAD;
 
     // 调用广告
     private Handler aHandler = new Handler() {
@@ -142,7 +141,7 @@ public class AppActivity extends Cocos2dxActivity {
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         // String url="file:///android_asset/DayDayUp.png";
         // oks.setImagePath(url);// 确保SDcard下面存在此张图片
-        oks.setImageUrl("https://raw.githubusercontent.com/nangongyifeng/SharePhoto/master/DayDayUp.png");
+        oks.setImageUrl("https://raw.githubusercontent.com/nangongyifeng/SharePhoto/master/cannot_stop.png");
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.liubo.DayDayUp");
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
@@ -154,40 +153,6 @@ public class AppActivity extends Cocos2dxActivity {
 
         // 启动分享GUI
         oks.show(this);
-    }
-
-    /**
-     * 分享功能
-     *
-     * @param context
-     *            上下文
-     * @param activityTitle
-     *            Activity的名字
-     * @param msgTitle
-     *            消息标题
-     * @param msgText
-     *            消息内容
-     * @param f
-     *            图片路径，不分享图片则传null
-     */
-    public static void shareMsg(Context context, String activityTitle, String msgTitle, String msgText,
-            String filePath) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        if (filePath == null || filePath.equals("")) {
-            intent.setType("text/plain"); // 纯文本
-        } else {
-            File f = new File(filePath);
-            System.out.println(f);
-            if (f != null) {
-                intent.setType("image/*");
-                Uri u = Uri.fromFile(f);
-                intent.putExtra(Intent.EXTRA_STREAM, u);
-            }
-        }
-        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
-        intent.putExtra(Intent.EXTRA_TEXT, msgText);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(Intent.createChooser(intent, activityTitle));
     }
 
     // 分享照片
@@ -202,14 +167,17 @@ public class AppActivity extends Cocos2dxActivity {
     // 展示广告
     public void showBannerAD() {
         addBTBannerAD();
+        isShowBTbanner = true;
+
         if (mBaiduBanner_Image.getVisibility() == View.GONE) {
             addGDTbannerAD();
+            isShowBTbanner = false;
         }
     }
 
     public void showInterstitialAD() {
         // TODO Auto-generated method stub
-        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
+        if (!isShowBTbanner) {
             addGDTInterstitialAD();
         }else{
             addBTInterstitialAD();
@@ -257,11 +225,6 @@ public class AppActivity extends Cocos2dxActivity {
 
     public void addBTBannerAD() {
         if (mBaiduBanner_Image == null || mBaiduBanner_Image.getVisibility() == View.GONE) {
-
-            if (mBaiduBanner_Image_Text != null) {
-                mBaiduBanner_Image_Text.setVisibility(View.GONE);
-            }
-
             FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             lytp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
@@ -339,14 +302,6 @@ public class AppActivity extends Cocos2dxActivity {
             }
         });
         iad.loadAD();
-    }
-
-    public void addGDTSplashAD() {
-        FrameLayout rl = new FrameLayout(this);
-        FrameLayout.LayoutParams rlParame = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT,
-                LayoutParams.FILL_PARENT);
-        this.addContentView(bannerContainer, rlParame);
-        splashAD = new SplashAD(this, rl, Constants.APPID, Constants.SplashPosID, (SplashADListener) this);
     }
 
     // 退出

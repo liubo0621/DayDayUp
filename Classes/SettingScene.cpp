@@ -134,6 +134,9 @@ bool Setting::init() {
 
     //事件
     exitBtn->addTouchEventListener(CC_CALLBACK_2(Setting::exit, this));
+    auto qqLabel = Label::createWithSystemFont("《一发不止》qq交流群：426137242", "", 40);
+    qqLabel->setPosition(visibleSize.width / 2, visibleSize.height * 0.05);
+    addChild(qqLabel);
 
     return true;
 }

@@ -66,8 +66,6 @@
 		3A4C9C2B1BFF813D001774C5 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4C9C281BFF813D001774C5 /* right.png */; };
 		3A4C9C2E1BFF817C001774C5 /* DialogueLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C9C2C1BFF817C001774C5 /* DialogueLayer.cpp */; };
 		3A4C9C361BFF9CB2001774C5 /* life.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A4C9C351BFF9CB2001774C5 /* life.png */; };
-		3A55D3E01B8E024200C55EC9 /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A55D3DF1B8E024200C55EC9 /* plane.png */; };
-		3A55D3E11B8E024200C55EC9 /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A55D3DF1B8E024200C55EC9 /* plane.png */; };
 		3A55E2331BFC495B001E09CD /* Lua版本集成文档.md in Sources */ = {isa = PBXBuildFile; fileRef = 3A55E2291BFC495B001E09CD /* Lua版本集成文档.md */; };
 		3A7B1BC91B786DE800822AC2 /* GameOverLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A7B1BC71B786DE800822AC2 /* GameOverLayer.cpp */; };
 		3A7B1BCA1B786DE800822AC2 /* GameOverLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A7B1BC71B786DE800822AC2 /* GameOverLayer.cpp */; };
@@ -276,7 +274,6 @@
 		3A4C9C2C1BFF817C001774C5 /* DialogueLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DialogueLayer.cpp; sourceTree = "<group>"; };
 		3A4C9C2D1BFF817C001774C5 /* DialogueLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogueLayer.h; sourceTree = "<group>"; };
 		3A4C9C351BFF9CB2001774C5 /* life.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = life.png; sourceTree = "<group>"; };
-		3A55D3DF1B8E024200C55EC9 /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plane.png; sourceTree = "<group>"; };
 		3A55E2271BFC495B001E09CD /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
 		3A55E2291BFC495B001E09CD /* Lua版本集成文档.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Lua版本集成文档.md"; sourceTree = "<group>"; };
 		3A55E91E1C036F9D00423C27 /* CustomerJniHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerJniHelper.h; sourceTree = "<group>"; };
@@ -607,7 +604,6 @@
 				3A7B1BCB1B7871AF00822AC2 /* gameoverBg.png */,
 				3A7B1BCE1B7871C000822AC2 /* gameover.png */,
 				3A7B1BE01B7895FB00822AC2 /* new.png */,
-				3A55D3DF1B8E024200C55EC9 /* plane.png */,
 				3A7B1BD41B7873A300822AC2 /* scoreBoard.png */,
 				3A7B1BD11B7871DD00822AC2 /* button.png */,
 				3A7B1BD71B78801E00822AC2 /* gameoverbtn.png */,
@@ -852,7 +848,6 @@
 				3AD0D17A1B9821C400198D1B /* menu_effect.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				3AD6E92A1B763AE80015529C /* tip.png in Resources */,
-				3A55D3E01B8E024200C55EC9 /* plane.png in Resources */,
 				3A05661E1B8F1C6000113EFB /* menu_0012.png in Resources */,
 				3A962F271B93428F0080F9FB /* setting_text.png in Resources */,
 				3AD6E9201B763AE80015529C /* die1.mp3 in Resources */,
@@ -907,7 +902,6 @@
 				3AA1C50F1B908F880043E510 /* menu_0013.png in Resources */,
 				3AD6E92B1B763AE80015529C /* tip.png in Resources */,
 				3AD0D1811B98278B00198D1B /* menu_exit_btn.png in Resources */,
-				3A55D3E11B8E024200C55EC9 /* plane.png in Resources */,
 				3AB00BF71B74C1D400E76FE4 /* obstacle_rotation_long.png in Resources */,
 				3AD0D1711B981F9900198D1B /* menu_exit.png in Resources */,
 				3AB00BE41B7431E100E76FE4 /* bg.png in Resources */,
@@ -1041,7 +1035,8 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
-				PROVISIONING_PROFILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.theonepiano.mozart;
+				PROVISIONING_PROFILE = "07a9bf11-b1c4-4a9f-8919-3e7fe92abf5e";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
@@ -1078,7 +1073,8 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
-				PROVISIONING_PROFILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.theonepiano.mozart;
+				PROVISIONING_PROFILE = "07a9bf11-b1c4-4a9f-8919-3e7fe92abf5e";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";

@@ -92,7 +92,7 @@
 
         <meta-data
             android:name="BDAPPUNIONSDK_APIKEY"
-            android:value="1003647a" />
+            android:value="25a29505ec40e5faaf5f052da98ffc87" />
 
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data

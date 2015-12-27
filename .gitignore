@@ -1,7 +1,8 @@
 #android
-bin
+proj.android/bin/
 gen
 obj
+proj.android/libs/armeabi/*.so
 proj.android/libs/armeabi
 assets
 proguard
@@ -16,7 +17,8 @@ xcuserdata
 *.pbxuser
 *.DS_Store
 .svn
-*.xcuserstate
+proj.ios_mac/DayDayUp.xcodeproj/*.xcuserstate
+proj.ios_mac/DayDayUp.xcodeproj/*.pbxproj
 *.xcsettings
 
 # from cocoapods
