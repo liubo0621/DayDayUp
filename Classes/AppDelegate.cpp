@@ -1,7 +1,6 @@
 #include "AppDelegate.h"
 #include "MenuScene.h"
 #include "MobClickCpp.h"
-#include "Life.h"
 #include "SimpleAudioEngine.h"
 #include <ctime>
 
@@ -27,26 +26,7 @@ void AppDelegate::initGLContextAttrs() {
     GLView::setGLContextAttrs(glContextAttrs);
 }
 
-void AppDelegate::recoverLife() {
-    //时间
-    int now_time = (int)time(NULL);  //秒级
-    int end_time = UserDefault::getInstance()->getIntegerForKey("time", 0);
-    if (end_time != 0) {
-        int interval_time = (now_time - end_time) / RECOVER_TIME;
-        log("interval_time %d", interval_time);
-        int life = UserDefault::getInstance()->getIntegerForKey("life", MAX_LIFE);
-        int newLife = life + interval_time;
-        if (newLife <= MAX_LIFE) {
-            UserDefault::getInstance()->setIntegerForKey("life", newLife);
-        } else {
-            UserDefault::getInstance()->setIntegerForKey("life", MAX_LIFE);
-        }
-    }
-}
-
 bool AppDelegate::applicationDidFinishLaunching() {
-    recoverLife();
-
     // umeng 数据统计
     const char* umengAppKey = "";
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -71,6 +51,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
+    //res
+    FileUtils::getInstance()->addSearchPath("fonts");
+    FileUtils::getInstance()->addSearchPath("gameover");
+    FileUtils::getInstance()->addSearchPath("game");
+    FileUtils::getInstance()->addSearchPath("menu");
+    FileUtils::getInstance()->addSearchPath("sound");
+    FileUtils::getInstance()->addSearchPath("utils");
+
+    //class
+    FileUtils::getInstance()->addSearchPath("gameover_scene");
+    FileUtils::getInstance()->addSearchPath("game_scene");
+    FileUtils::getInstance()->addSearchPath("menu_scene");
+    FileUtils::getInstance()->addSearchPath("tools");
+    FileUtils::getInstance()->addSearchPath("tools/platfom/android");
+
     // create a scene. it's an autorelease object
     auto scene = MenuScene::createScene();
 
@@ -84,10 +79,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     umeng::MobClickCpp::applicationDidEnterBackground();
 
-    int now_time;
-    now_time = (int)time(NULL);  //秒级 long
-    UserDefault::getInstance()->setIntegerForKey("time", now_time);
-
     Director::getInstance()->stopAnimation();
     log("applicationDidEnterBackground");
     // if you use SimpleAudioEngine, it must be pause
@@ -96,7 +87,6 @@ void AppDelegate::applicationDidEnterBackground() {
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
-    recoverLife();
     umeng::MobClickCpp::applicationWillEnterForeground();
     Director::getInstance()->startAnimation();
     log("applicationWillEnterForeground");

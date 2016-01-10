@@ -351,7 +351,7 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/AppDelegate.o: \
  jni/../../cocos2d/cocos/3d/../deprecated/CCString.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h \
- jni/../../Classes/MenuScene.h \
+ jni/../../Classes/menu_scene/MenuScene.h \
  jni/../../cocos2d/cocos/3d/../ui/CocosGUI.h \
  jni/../../cocos2d/cocos/3d/../ui/UIWidget.h \
  jni/../../cocos2d/cocos/3d/../2d/CCProtectedNode.h \
@@ -386,7 +386,6 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/AppDelegate.o: \
  jni/../../cocos2d/cocos/3d/../ui/UILayoutComponent.h \
  jni/../../cocos2d/cocos/3d/../2d/CCComponent.h \
  jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h \
- jni/../../Classes/Life.h jni/../../Classes/DialogueLayer.h \
  jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h \
  jni/../../cocos2d/cocos/audio/android/../include/Export.h
 
@@ -1094,7 +1093,7 @@ jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h:
 
 jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h:
 
-jni/../../Classes/MenuScene.h:
+jni/../../Classes/menu_scene/MenuScene.h:
 
 jni/../../cocos2d/cocos/3d/../ui/CocosGUI.h:
 
@@ -1163,10 +1162,6 @@ jni/../../cocos2d/cocos/3d/../ui/UILayoutComponent.h:
 jni/../../cocos2d/cocos/3d/../2d/CCComponent.h:
 
 jni/../../cocos2d/external/libmobclickcpp/include/MobClickCpp.h:
-
-jni/../../Classes/Life.h:
-
-jni/../../Classes/DialogueLayer.h:
 
 jni/../../cocos2d/cocos/audio/android/../include/SimpleAudioEngine.h:
 

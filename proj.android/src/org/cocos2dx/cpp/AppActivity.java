@@ -167,12 +167,12 @@ public class AppActivity extends Cocos2dxActivity {
     // 展示广告
     public void showBannerAD() {
         addBTBannerAD();
-        isShowBTbanner = true;
-
-        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
-            addGDTbannerAD();
-            isShowBTbanner = false;
-        }
+//        isShowBTbanner = true;
+//
+//        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
+//            addGDTbannerAD();
+//            isShowBTbanner = false;
+//        }
     }
 
     public void showInterstitialAD() {

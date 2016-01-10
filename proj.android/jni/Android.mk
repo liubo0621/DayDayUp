@@ -12,20 +12,25 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/NormalScene.cpp \
-                   ../../Classes/ElasticityScene.cpp \
-                   ../../Classes/TimeScene.cpp \
-                   ../../Classes/TwinkleScene.cpp \
-                   ../../Classes/DarkScene.cpp \
-                   ../../Classes/OppositeGravityScene.cpp \
-                   ../../Classes/GameOverLayer.cpp \
-                   ../../Classes/MenuScene.cpp \
-                   ../../Classes/SettingScene.cpp \
-                   ../../Classes/CustomerJniHelper.cpp \
-                   ../../Classes/Life.cpp \
-                   ../../Classes/DialogueLayer.cpp
+                   ../../Classes/game_scene/NormalScene.cpp \
+                   ../../Classes/game_scene/ElasticityScene.cpp \
+                   ../../Classes/game_scene/TimeScene.cpp \
+                   ../../Classes/game_scene/TwinkleScene.cpp \
+                   ../../Classes/game_scene/DarkScene.cpp \
+                   ../../Classes/game_scene/OppositeGravityScene.cpp \
+                   ../../Classes/game_scene/PropsScene.cpp \
+                   ../../Classes/gameover_scene/GameOverLayer.cpp \
+                   ../../Classes/menu_scene/MenuScene.cpp \
+                   ../../Classes/tools/AdManagerProtocol.cpp \
+                   ../../Classes/tools/DialogueLayer.cpp \
+                   ../../Classes/tools/platform/android/AdManager.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+$(LOCAL_PATH)/../../Classes/game_scene \
+$(LOCAL_PATH)/../../Classes/gameover_scene \
+$(LOCAL_PATH)/../../Classes/menu_scene \
+$(LOCAL_PATH)/../../Classes/tools \
+$(LOCAL_PATH)/../../Classes/tools/platform/android
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
