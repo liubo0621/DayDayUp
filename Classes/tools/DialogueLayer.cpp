@@ -8,6 +8,7 @@
 
 #include "DialogueLayer.h"
 
+
 DialogueLayer *DialogueLayer::create(const char *dialogueBg, const char *leftImg, const char *rightImg) {
     DialogueLayer *ret = new (std::nothrow) DialogueLayer();
     if (ret && ret->init(dialogueBg, leftImg, rightImg)) {

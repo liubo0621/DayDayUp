@@ -25,7 +25,7 @@ public:
     static Scene *createScene();
 
     void addStartBtn();
-    void addMenuBtn(Button *parent, const char *text, MenuBtnType type);
+    void addMenuBtn(Button *parent, const char *text, MenuBtnType type, bool isNew = false);
     void addWave(Sprite *sender);    //破浪效果
     void addFireWorks(float delta);  //烟花
 

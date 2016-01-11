@@ -103,12 +103,26 @@ public class AppActivity extends Cocos2dxActivity {
             case -3:
                 deleteBannerAd();
                 break;
+            case -11:
+                tip(-11);
+                break;
+            case -12:
+                tip(-12);
+                break;
             default:
                 showShare(msg.what);
                 break;
             }
         }
     };
+
+    void tip(int n){
+        if(n == -11) {
+            Toast.makeText(this, "您还没选择模式哦！", Toast.LENGTH_LONG).show();
+        }else if(n == -12) {
+            Toast.makeText(this, "您还没选择难度哦", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

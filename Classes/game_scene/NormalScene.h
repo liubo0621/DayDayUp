@@ -31,10 +31,10 @@ public:
     virtual void onEnter();
 
     // 检测碰撞
-    void collisionDetection(float delta);
-    bool onContactBegin(PhysicsContact& contact);
+    virtual void collisionDetection(float delta);
+    virtual bool onContactBegin(PhysicsContact& contact);
 
-    void update(float delta);
+    virtual void update(float delta);
     //移动障碍物
     virtual void moveObstacles(float delta);
     //添加障碍物

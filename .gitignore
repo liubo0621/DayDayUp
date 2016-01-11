@@ -7,7 +7,15 @@ proj.android/libs/armeabi
 assets
 proguard
 local.properties
-*.apk
+proj.android/bin/classes.dex
+proj.android/libs/armeabi/libcocos2dcpp.so
+proj.android/bin/resources.ap_
+proj.ios_mac/DayDayUp.xcodeproj/project.pbxproj
+proj.ios_mac/DayDayUp.xcodeproj/project.xcworkspace/xcuserdata/liubo.xcuserdatad/UserInterfaceState.xcuserstate
+proj.ios_mac/DayDayUp.xcodeproj/xcuserdata/liubo.xcuserdatad/xcschemes/DayDayUp iOS.xcscheme
+proj.ios_mac/DayDayUp.xcodeproj/project.pbxproj
+proj.android/obj/local/armeabi/libcocos2dcpp.so
+proj.android/bin/*.apk
 .settings
 
 # ios

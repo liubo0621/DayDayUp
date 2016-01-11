@@ -104,7 +104,7 @@ bool NormalModel::init() {
 
     //小球
     _ball = Sprite::create("ball.png");
-    _ballBody = PhysicsBody::createCircle(_ball->getContentSize().width / 2);
+    _ballBody = PhysicsBody::createCircle(_ball->getContentSize().width / 2 - 10);
     _ballBody->setGravityEnable(false);
     _ballBody->setCategoryBitmask(0x01);
     _ballBody->setContactTestBitmask(0x01);
@@ -673,6 +673,7 @@ void NormalModel::addScore(float delta) {
 
 void NormalModel::gameOver() {
     this->unscheduleAllSelectors();
+    this->unscheduleUpdate();
 
     Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
 
@@ -685,7 +686,9 @@ void NormalModel::gameOver() {
     blood->setPosition(_ball->getPosition());
     this->addChild(blood);
 
+    _ball->stopAllActions();
     _ball->setVisible(false);
+    this->runAction(Sequence::create(DelayTime::create(2), CallFunc::create([=] { _ball->removeFromParent(); }), NULL));
 
     UserDefault::getInstance()->setIntegerForKey("score", _score);
 

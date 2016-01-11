@@ -18,7 +18,7 @@
 #include "TimeScene.h"
 #include "TwinkleScene.h"  //闪烁模式
 
-#define MOVE_TIME 0.3
+#define MOVE_TIME 0.2
 #define SHOW_DIFFICULTY_MENU_NUM 3
 #define SHOW_MODEL_MENU_NUM 7
 
@@ -104,6 +104,7 @@ bool MenuScene::init() {
     _selectDifficultyBtn->setPosition(Vec2(_visibleSize.width * 4 / 5, _visibleSize.height * 0.54));
     auto difficulty = UserDefault::getInstance()->getStringForKey("difficulty", "难度");
     addChild(setBtntext(difficulty.c_str(), _selectDifficultyBtn));
+
     _selectDifficultyBtn->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type) {
         if (type == Widget::TouchEventType::ENDED) {
             if (!_isShow) {
@@ -120,7 +121,7 @@ bool MenuScene::init() {
     addMenuBtn(_selectModelBtn, TWINKLE_MODEL, MenuBtnType::MODEL);
     addMenuBtn(_selectModelBtn, DARK_MODEL, MenuBtnType::MODEL);
     addMenuBtn(_selectModelBtn, OPPOSITE_GRAVITY_DMODEL, MenuBtnType::MODEL);
-    addMenuBtn(_selectModelBtn, PROPS_MODEL, MenuBtnType::MODEL);
+    addMenuBtn(_selectModelBtn, PROPS_MODEL, MenuBtnType::MODEL, true);
 
     addMenuBtn(_selectDifficultyBtn, EASY, MenuBtnType::DIFFICULTY);
     addMenuBtn(_selectDifficultyBtn, MIDDLE, MenuBtnType::DIFFICULTY);
@@ -211,10 +212,15 @@ void MenuScene::addStartBtn() {
     });
 }
 
-void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type) {
+void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, bool isNew) {
     auto btn = Button::create("menu_btn.png");
     btn->setPosition(parent->getContentSize() / 2);
     btn->setVisible(false);
+    if (isNew) {
+        auto newTip = Sprite::create("new.png");
+        btn->addChild(newTip);
+        newTip->setPosition(btn->getContentSize());
+    }
     parent->addChild(setBtntext(text, btn));
     if (type == MenuBtnType::DIFFICULTY) {
         _difficultyBtns.pushBack(btn);
@@ -253,7 +259,6 @@ ClippingNode* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) 
     }
     auto label = Label::createWithTTF("", "jiancuyuan.ttf", 50);
     label->setString(text);
-    label->setColor(Color3B::BLACK);
     label->setSystemFontSize(50);
     label->setPosition(btn->getContentSize() / 2);
     label->setTag(10);
@@ -368,7 +373,13 @@ void MenuScene::replaceScene() {
     } else if (model == PROPS_MODEL) {
         nextScene = PropsScene::createScene();
     } else {
-        log("model can't be null");
+        AdManagerProtocol::getInstance()->showAD(-11);
+        return;
+    }
+
+    auto difficulty = UserDefault::getInstance()->getStringForKey("difficulty", "null");
+    if (difficulty == "null") {
+        AdManagerProtocol::getInstance()->showAD(-12);
         return;
     }
 
