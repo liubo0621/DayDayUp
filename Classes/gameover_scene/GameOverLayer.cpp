@@ -31,7 +31,7 @@ bool GameOver::init() {
     }
 
     //广告
-    if (arc4random() % 2 == 0) {
+    if (arc4random() % 5 == 0) {
         AdManagerProtocol::getInstance()->showAD(-2);  //插屏
     }
 

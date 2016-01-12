@@ -10,6 +10,8 @@
 #include "GameOverLayer.h"
 #include "NormalScene.h"
 
+#define OBSTACLE_NUM 11
+
 Scene *NormalModel::createScene() {
     auto scene = Scene::createWithPhysics();
     //    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -44,33 +46,43 @@ bool NormalModel::init() {
     }
 
     //背景
-    auto bg = Sprite::create("bg.png");
+    auto bg = Sprite::create("bg_bottom.jpg");
     bg->setPosition(_visibleSize / 2);
-    this->addChild(bg, -1);
-    //颜色
-    auto random = arc4random() % 5;
-    //    int random=3;
-    //    log("bg   %d",random);
-    switch (random) {
-        case 0:
-            bg->setColor(Color3B(160, 32, 240));  //肖贡土色
-            break;
-        case 1:
-            bg->setColor(Color3B(255, 125, 64));  //肉黄
-            break;
-        case 2:
-            bg->setColor(Color3B(255, 153, 18));  //镉黄
-            break;
-        case 3:
-            bg->setColor(Color3B(138, 43, 226));  //紫罗兰
-            break;
-        case 4:
-            bg->setColor(Color3B(255, 99, 71));  //番茄红
-            break;
+    this->addChild(bg, -3);
 
-        default:
-            break;
-    }
+    auto bg_middle = Sprite::create("bg_middle.jpg");
+    bg_middle->setPosition(_visibleSize / 2);
+    bg_middle->setOpacity(50);
+    addChild(bg_middle, -2);
+
+    auto bg_top = Sprite::create("bg_top.png");
+    bg_top->setPosition(_visibleSize / 2);
+    addChild(bg_top, -1);
+
+    //    //颜色
+    //    auto random = arc4random() % 5;
+    //    //    int random=3;
+    //    //    log("bg   %d",random);
+    //    switch (random) {
+    //        case 0:
+    //            bg->setColor(Color3B(160, 32, 240));  //肖贡土色
+    //            break;
+    //        case 1:
+    //            bg->setColor(Color3B(255, 125, 64));  //肉黄
+    //            break;
+    //        case 2:
+    //            bg->setColor(Color3B(255, 153, 18));  //镉黄
+    //            break;
+    //        case 3:
+    //            bg->setColor(Color3B(138, 43, 226));  //紫罗兰
+    //            break;
+    //        case 4:
+    //            bg->setColor(Color3B(255, 99, 71));  //番茄红
+    //            break;
+    //
+    //        default:
+    //            break;
+    //    }
 
     //底部地面
     auto bottom = Sprite::create("bottom.png");
@@ -112,45 +124,10 @@ bool NormalModel::init() {
     _ballBody->setGroup(0);
     _ball->setPhysicsBody(_ballBody);
     _ball->setPosition(_visibleSize / 2);
-    this->addChild(_ball);
+    this->addChild(_ball, 1000);
 
-    //*******************添加障碍物****************************
-    auto randomN = arc4random() % 8;
-    int randT = arc4random() % 3 - 1;
-    _currentObstacle = randomN;
-
-    //    randomN=0;
-    //两个长的一顺一逆旋转
-    if (randomN == 0) {
-        obstacle6(_visibleSize.height * 0.85, 4 + randT);
-    }
-    //两个长的 一顺一逆 速度不一
-    if (randomN == 1) {
-        obstacle9(_visibleSize.height * 0.85, 4 + randT);
-    }
-    //两个长棍交叉转
-    if (randomN == 2) {
-        obstacle3(_visibleSize.height * 0.85, 4 + randT);
-    }
-    //两个长棍成60度角同时转
-    if (randomN == 3) {
-        obstacle4(_visibleSize.height * 0.85, 4 + randT);
-    }
-    //两个长的 90度
-    if (randomN == 4) {
-        obstacle5(_visibleSize.height * 0.85, 4 + randT);
-    }
-    //侧滑
-    if (randomN == 5) {
-        obstacle1(_visibleSize.height * 0.85, 1);
-    }
-    //两个长的 顺时针旋转
-    if (randomN == 6) {
-        obstacle7(_visibleSize.height * 0.85, 4 + randT);
-    }
-    if (randomN == 7) {  //两个长的  速度不一
-        obstacle8(_visibleSize.height * 0.85, 6);
-    }
+    //添加障碍物
+    randomAddObstacle(_visibleSize.height * 0.85);
 
     //分数
     // 创建LabelBMFont标签对象，参数为显示文字内容、fnt文件
@@ -216,52 +193,67 @@ void NormalModel::addObstacle(float delta) {
     if (obstacle->getPosition().y <= _visibleSize.height / 2) {
         _currentSprite = obstacle;  //储存当前障碍物，计算分数时用
         schedule(schedule_selector(NormalModel::addScore));
+        randomAddObstacle(_visibleSize.height + 200);
+    }
+}
 
-        int random;  //随机障碍物
-        //防止产生重复的障碍物
-        do {
-            random = arc4random() % 8;
-        } while (random == _currentObstacle);
-        _currentObstacle = random;
+void NormalModel::randomAddObstacle(float height) {
+    int random;  //随机障碍物
+    //防止产生重复的障碍物
+    do {
+        random = arc4random() % OBSTACLE_NUM;
+    } while (_currentObstacle != -1 && random == _currentObstacle);
+    _currentObstacle = random;
 
-        int randT = arc4random() % 3 - 1;
+    int randT = arc4random() % 3 - 1;
 
-        //        random=0;
+    //        random=0;
 
-        //两个长的 顺时针旋转
-        if (random == 0) {
-            obstacle6(_visibleSize.height + 200, 4 + randT);
-        }
-        //两个长的 一顺一逆旋转 速度不一
-        if (random == 1) {
-            obstacle9(_visibleSize.height + 200, 4 + randT);
-        }
+    //两个长的 顺时针旋转
+    if (random == 0) {
+        obstacle6(height, 4 + randT);
+    }
+    //两个长的 一顺一逆旋转 速度不一
+    else if (random == 1) {
+        obstacle9(height, 4 + randT);
+    }
 
-        //两个长棍交叉转
-        if (random == 2) {
-            obstacle3(_visibleSize.height + 200, 4 + randT);
-        }
+    //两个长棍交叉转
+    else if (random == 2) {
+        obstacle3(height, 4 + randT);
+    }
 
-        //两个长棍成60度角同时转
-        if (random == 3) {
-            obstacle4(_visibleSize.height + 200, 4 + randT);
-        }
-        //两个长的 90度
-        if (random == 4) {
-            obstacle5(_visibleSize.height + 200, 4 + randT);
-        }
-        //侧滑
-        if (random == 5) {
-            obstacle1(_visibleSize.height + 200, 1);
-        }
-        //两个长的一顺一逆旋转
-        if (random == 6) {
-            obstacle7(_visibleSize.height + 200, 4 + randT);
-        }
-        //两个长的，旋转速度不一
-        if (random == 7) {
-            obstacle8(_visibleSize.height + 200, 6);
-        }
+    //两个长棍成60度角同时转
+    else if (random == 3) {
+        obstacle4(height, 4 + randT);
+    }
+    //两个长的 90度
+    else if (random == 4) {
+        obstacle5(height, 4 + randT);
+    }
+    //侧滑
+    else if (random == 5) {
+        obstacle1(height, 1);
+    }
+    //两个长的一顺一逆旋转
+    else if (random == 6) {
+        obstacle7(height, 4 + randT);
+    }
+    //两个长的，旋转速度不一
+    else if (random == 7) {
+        obstacle8(height, 6);
+    }
+    //小圆 一个扇页
+    else if (random == 8) {
+        obstacle10(height, 6);
+    }
+    //大圆 两个短扇页
+    else if (random == 9) {
+        obstacle11(height, 6);
+    }
+    //圆角矩形 两个长扇页
+    else if (random == 10) {
+        obstacle12(height, 4 + randT);
     }
 }
 
@@ -362,6 +354,28 @@ Sprite *NormalModel::addObstacle(std::string spriteName, Sprite *stack, cocos2d:
     }
 
     return obstacle;
+}
+
+/**
+ *  添加轨道
+ *
+ *  @param fileName 轨道图片名
+ *  @param height   添加高度
+ *
+ *  @return 轨道精灵
+ */
+Sprite *NormalModel::addRail(const char *fileName, double height) {
+    auto rail = Sprite::create(fileName);
+    double x = 0;
+    if (arc4random() % 2) {
+        x = _visibleSize.width * 0.6;
+    } else {
+        x = _visibleSize.width * 0.4;
+    }
+    rail->setPosition(x, height);
+    _obstacles.pushBack(rail);
+    addChild(rail);
+    return rail;
 }
 
 //*******************具体障碍物************************
@@ -576,6 +590,89 @@ void NormalModel::obstacle9(double height, float t) {
     rightObstacleRotationLong->setTag(LONG_OBSTACLE);
 }
 
+//小圆 一个扇页
+void NormalModel::obstacle10(double height, float t) {
+    auto smalRail = addRail("rail_small.png", height);
+    auto obstacleRotationLong = addObstacle("obstacle_rotation_long.png", smalRail, Vec2(smalRail->getContentSize().width / 2, smalRail->getContentSize().height - 5));
+
+    int i = 1;
+    if (smalRail->getPositionX() < _visibleSize.width / 2) {
+        i = -1;
+    }
+    auto rotation = RepeatForever::create(RotateBy::create(t, 360 * i));
+    obstacleRotationLong->runAction(rotation);
+    obstacleRotationLong->setTag(LONG_OBSTACLE);
+
+    smalRail->runAction(rotation->clone());
+}
+//大圆 两个短扇页
+void NormalModel::obstacle11(double height, float t) {
+    auto bigRail = addRail("rail_big.png", height);
+    auto leftObstacleTotationSort = addObstacle("obstacle_rotation_short.png", bigRail, Vec2(bigRail->getContentSize().width / 2, bigRail->getContentSize().height - 5));
+    auto rightObstacleTotationSort = addObstacle("obstacle_rotation_short.png", bigRail, Vec2(bigRail->getContentSize().width / 2, bigRail->getContentSize().height - 5));
+    rightObstacleTotationSort->setRotation(90);
+
+    //旋转
+    auto rotation = RepeatForever::create(RotateBy::create(t, 360));
+
+    bigRail->runAction(rotation->clone());
+    leftObstacleTotationSort->runAction(rotation);
+    rightObstacleTotationSort->runAction(rotation->clone());
+
+    leftObstacleTotationSort->setTag(LONG_OBSTACLE);
+    rightObstacleTotationSort->setTag(LONG_OBSTACLE);
+}
+//圆角矩形 两个长扇页
+void NormalModel::obstacle12(double height, float t) {
+    auto rectRail = addRail("rail_rect.png", height);
+    rectRail->setPosition(_visibleSize.width / 2, height);
+
+    //圆角矩形的长 宽 半径
+    auto rectRailWidth = rectRail->getContentSize().width;
+    auto rectRailHeight = rectRail->getContentSize().height;
+    auto r = rectRailHeight / 2;
+
+    //顺时针 圆角矩形一周
+    //右半弧
+    int rectWidth = 9;
+    auto p1 = Vec2(rectRailWidth - r, rectRailHeight - rectWidth);
+    auto p2 = Vec2(rectRailWidth - rectWidth, rectRailHeight / 2);
+    auto p3 = Vec2(rectRailWidth - r, rectWidth);
+    //左半弧
+    auto p4 = Vec2(r, rectWidth);
+    auto p5 = Vec2(rectWidth, rectRailHeight / 2);
+    auto p6 = Vec2(r, rectRailHeight - rectWidth);
+
+    auto obstaclePosition = p1;
+    auto leftObstacleTotationLong = addObstacle("obstacle_rotation_long.png", rectRail, obstaclePosition);
+    auto rightObstacleTotationLong = addObstacle("obstacle_rotation_long.png", rectRail, obstaclePosition);
+    rightObstacleTotationLong->setRotation(90);
+
+    auto array = PointArray::create(20);
+    array->addControlPoint(p1);
+    array->addControlPoint(p2);
+    array->addControlPoint(p3);
+    array->addControlPoint(p4);
+    array->addControlPoint(p5);
+    array->addControlPoint(p6);
+    array->addControlPoint(p1);
+
+    //    作用：创建一个样条曲线轨迹的动作
+    //    参数1：完成轨迹所需的时间
+    //    参数2：控制点的坐标数组
+    //    拟合度  其值= 0 路径最柔和
+    auto moveAction = CardinalSplineTo::create(10, array, 0);
+    auto rotation = RotateBy::create(t, 360);
+
+    auto repeatMove = RepeatForever::create(moveAction);
+    auto repeatRotation = RepeatForever::create(rotation);
+
+    leftObstacleTotationLong->runAction(repeatMove);
+    leftObstacleTotationLong->runAction(repeatRotation);
+    rightObstacleTotationLong->runAction(repeatMove->clone());
+    rightObstacleTotationLong->runAction(repeatRotation->clone());
+}
+
 //**********************************************************************************
 
 //移动障碍物
@@ -672,7 +769,7 @@ void NormalModel::addScore(float delta) {
 }
 
 void NormalModel::gameOver() {
-    this->unscheduleAllSelectors();//停止所有定时器
+    this->unscheduleAllSelectors();  //停止所有定时器
 
     Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
 
