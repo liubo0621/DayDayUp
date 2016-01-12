@@ -217,7 +217,7 @@ void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, b
     btn->setPosition(parent->getContentSize() / 2);
     btn->setVisible(false);
     if (isNew) {
-        auto newTip = Sprite::create("new.png");
+        auto newTip = Sprite::create("menu_new.png");
         btn->addChild(newTip);
         newTip->setPosition(btn->getContentSize());
     }
@@ -257,6 +257,7 @@ ClippingNode* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) 
         static_cast<Label*>(btn->getChildByTag(10))->setString(text);
         return nullptr;
     }
+
     auto label = Label::createWithTTF("", "jiancuyuan.ttf", 50);
     label->setString(text);
     label->setSystemFontSize(50);
@@ -268,6 +269,7 @@ ClippingNode* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) 
     clippingNode->setStencil(label);
     clippingNode->setInverted(true);
     clippingNode->setAlphaThreshold(0.04);
+    clippingNode->setTag(20);
     clippingNode->addChild(btn);
     return clippingNode;
 }

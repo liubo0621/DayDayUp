@@ -161,10 +161,10 @@ bool NormalModel::init() {
     scheduleUpdate();
 
     //物理引擎碰撞检测
-    auto contactListener = EventListenerPhysicsContactWithGroup::create(0);
-    contactListener->onContactBegin = CC_CALLBACK_1(NormalModel::onContactBegin, this);
+    _contactListener = EventListenerPhysicsContactWithGroup::create(0);
+    _contactListener->onContactBegin = CC_CALLBACK_1(NormalModel::onContactBegin, this);
 
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
     return true;
 }
@@ -672,8 +672,7 @@ void NormalModel::addScore(float delta) {
 }
 
 void NormalModel::gameOver() {
-    this->unscheduleAllSelectors();
-    this->unscheduleUpdate();
+    this->unscheduleAllSelectors();//停止所有定时器
 
     Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
 

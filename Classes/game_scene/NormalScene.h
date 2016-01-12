@@ -81,6 +81,8 @@ protected:
 
     Size _visibleSize;
 
+    EventListenerPhysicsContactWithGroup* _contactListener;
+
     bool _isMove;
     bool _firstTouch;
     bool _bestScoreIsShow;

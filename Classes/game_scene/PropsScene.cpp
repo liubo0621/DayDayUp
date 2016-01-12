@@ -7,17 +7,21 @@
 //
 
 #include "PropsScene.h"
+#include <cmath>
 
 #define SCALE_SMAL "scale_smal"
 #define PROTECTION "protection"
 #define INVINCIBLE "invincible"  //无敌
 
+#define PROTECTION_TAG 11
 #define BLINK_TIME 1
 #define PROP_ACTIVE_TIME 10
+#define ADD_PROP_RANDOM_MAX 8
+#define ADD_PROP_RANDOM_MIN 3
 
 Scene* PropsScene::createScene() {
     auto scene = Scene::createWithPhysics();
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vec2(0, -2000));
 
     auto layer = PropsScene::create();
@@ -35,6 +39,11 @@ bool PropsScene::init() {
     return true;
 }
 
+// a <= n < b
+int PropsScene::random_a_b(int min, int max) {
+    return arc4random() % (max - min) + min;
+}
+
 void PropsScene::update(float delta) {
     collisionDetection(delta);  //碰撞检测
     moveObstacles(delta);       //移动障碍物
@@ -43,17 +52,32 @@ void PropsScene::update(float delta) {
     addProps(delta);            //添加道具
 }
 
+//间隔random 个障碍物 添加一个道具
 void PropsScene::addProps(float delta) {
-    auto random = arc4random() % 1 + 1;
-    if (_score > 0 && _addApropMapScore != _score && _score % random == 0) {
+    if (_score > 0 && _addApropMapScore != _score) {
+        _addApropMapScore = _score;
+
+        if (_random == -1) {
+            _random = random_a_b(ADD_PROP_RANDOM_MIN, ADD_PROP_RANDOM_MAX);
+        }
+
+        if (_score % _random > 0) {
+            return;
+        }
+        _random = -1;
+
         Sprite* prop = nullptr;
         auto rand = arc4random() % 2;
         if (rand == 0) {
             prop = Sprite::create("capsule.png");
             prop->setName(SCALE_SMAL);
         } else if (rand == 1) {
+            if (_isAddPropected) {
+                return;
+            }
             prop = Sprite::create("shield.png");
             prop->setName(PROTECTION);
+            _isAddPropected = true;
         }
 
         prop->setPosition(_visibleSize.width / 2, _visibleSize.height * 1.2);
@@ -69,8 +93,6 @@ void PropsScene::addProps(float delta) {
         prop->setPhysicsBody(physicsBody);
 
         addChild(prop);
-
-        _addApropMapScore = _score;
     }
 }
 
@@ -123,22 +145,53 @@ bool PropsScene::onContactBegin(PhysicsContact& contact) {
     if (body->getGroup() == 1) {
         for (Sprite* prop : _props) {
             if (prop->getPhysicsBody() == body) {
-                auto blink = Blink::create(BLINK_TIME, 3);
                 prop->setVisible(false);
 
+                //保护罩道具
                 if (prop->getName() == PROTECTION) {
-                    //                    prop->
-                } else if (prop->getName() == SCALE_SMAL) {
-                    auto scaleSmal = ScaleTo::create(0.2, 0.4);
-                    auto scaleBack = ScaleTo::create(0.2, 1);
-                    _ball->runAction(Sequence::create(scaleSmal, DelayTime::create(PROP_ACTIVE_TIME), blink, scaleBack, NULL));
+                    _isPropected = true;
+                    //添加保护罩
+                    auto protection = Sprite::create("shield.png");
+                    protection->setPosition(_ball->getContentSize() / 2);
+                    protection->setTag(PROTECTION_TAG);
+                    _ball->addChild(protection);
+
                 }
+                //变小道具
+                else if (prop->getName() == SCALE_SMAL) {
+                    if (_isScaleSmal) {
+                        _ball->stopAction(_scaleAction);
+                    }
+                    auto blink = Blink::create(BLINK_TIME, 3);
+                    auto scaleSmal = ScaleTo::create(0.2, 0.4, 0.4);
+                    auto scaleBack = ScaleTo::create(0.2, 1, 1);
+                    _scaleAction = Sequence::create(scaleSmal, DelayTime::create(PROP_ACTIVE_TIME), blink, scaleBack, CallFunc::create([=] { _isScaleSmal = false; }), NULL);
+                    _isScaleSmal = true;
+                    _ball->runAction(_scaleAction);
+                }
+
+                //删除道具图片
                 prop->stopAllActions();
                 _props.eraseObject(prop);
                 prop->removeFromParent();
             }
         }
-    } else {
+    }
+    //去掉保护罩功能
+    else if (_isPropected) {
+        if (!_isAttached) {
+            _isAttached = true;
+            auto blink = Blink::create(BLINK_TIME, 3);
+            _ball->runAction(Sequence::create(blink, CallFunc::create([=] {
+                                                  _ball->removeChildByTag(PROTECTION_TAG);
+                                                  _isPropected = false;
+                                                  _isAddPropected = false;
+                                                  _isAttached = false;
+                                              }),
+                                              NULL));
+        }
+
+    } else if (!_isPropected) {
         gameOver();
     }
 

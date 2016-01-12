@@ -21,6 +21,8 @@ public:
     void addProps(float delta);
     void delayRemveProps(Sprite* prop);
 
+    int random_a_b(int min, int max);
+
     virtual bool onContactBegin(PhysicsContact& contact);
 
     CREATE_FUNC(PropsScene);
@@ -29,6 +31,15 @@ private:
     Vector<Sprite*> _props;
 
     int _addApropMapScore = 0;
+    int _random = -1;
+
+    bool _isPropected = false;
+    bool _isScaleSmal = false;
+    bool _isAddPropected = false;
+    bool _isAttached = false;
+
+    Sequence* _scaleAction;
+    Sequence* _protetedAcTion;
 };
 
 #endif /* PropsScene_h */

@@ -26,8 +26,8 @@ bool ElasticityModel::init() {
     }
 
     //小球变大变小
-    auto scaleBig = ScaleTo::create(2, 1.5);
-    auto scaleSmall = ScaleTo::create(2, 0.5);
+    auto scaleBig = ScaleTo::create(2, 1.5, 1.5);
+    auto scaleSmall = ScaleTo::create(2, 0.5, 0.5);
 
     auto repeat = RepeatForever::create(Sequence::create(scaleBig, scaleSmall, NULL));
     _ball->runAction(repeat);
