@@ -9,12 +9,15 @@
 #include "Constants.h"
 #include "GameOverLayer.h"
 #include "NormalScene.h"
+#include "cocosGUI.h"
+
+using namespace ui;
 
 #define OBSTACLE_NUM 11
 
 Scene *NormalModel::createScene() {
     auto scene = Scene::createWithPhysics();
-    //    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vec2(0, -2000));
 
     auto layer = NormalModel::create();
@@ -30,6 +33,7 @@ bool NormalModel::init() {
     }
 
     _visibleSize = Director::getInstance()->getVisibleSize();
+    _originSize = Director::getInstance()->getVisibleOrigin();
     _isMove = false;
     _bestScoreIsShow = false;
     _bestScoreOnShow = false;
@@ -46,18 +50,12 @@ bool NormalModel::init() {
     }
 
     //背景
-    auto bg = Sprite::create("bg_bottom.jpg");
-    bg->setPosition(_visibleSize / 2);
-    this->addChild(bg, -3);
-
-    auto bg_middle = Sprite::create("bg_middle.jpg");
-    bg_middle->setPosition(_visibleSize / 2);
-    bg_middle->setOpacity(50);
-    addChild(bg_middle, -2);
-
-    auto bg_top = Sprite::create("bg_top.png");
-    bg_top->setPosition(_visibleSize / 2);
-    addChild(bg_top, -1);
+    addBg("bg_bottom.jpg", _originSize.height, -3);
+    addBg("bg_top.png", _originSize.height, -1);
+    auto bg = addBg("bg_middle.jpg", _originSize.height, -2, true);
+    bg->getTexture()->setAliasTexParameters();
+    auto bg2 = addBg("bg_middle.jpg", _originSize.height + bg->getContentSize().height, -2, true);
+    bg2->getTexture()->setAliasTexParameters();
 
     //    //颜色
     //    auto random = arc4random() % 5;
@@ -143,6 +141,34 @@ bool NormalModel::init() {
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
+    //    //暂停 开始
+    //    ballVelocit = Vec2(0, 0);
+    //    auto stop = Button::create();
+    //    stop->setTitleText("暂停");
+    //    stop->setTitleFontSize(50);
+    //    stop->setAnchorPoint(Vec2(0, 1));
+    //    stop->setPosition(Vec2(10, _visibleSize.height - 10));
+    //    stop->addTouchEventListener([=](Ref *sender, Widget::TouchEventType type) {
+    //        if (type == Widget::TouchEventType::ENDED) {
+    //            if (Director::getInstance()->isPaused()) {
+    //                stop->setTitleText("暂停");
+    //                Director::getInstance()->resume();
+    //                _ballBody->setVelocity(ballVelocit);
+    //                _ballBody->setGravityEnable(true);
+    //            } else {
+    //                ballVelocit.y = _ballBody->getVelocity().y;
+    //                stop->setTitleText("开始");
+    //                _ballBody->setVelocity(Vec2(0, 0));
+    //                _ballBody->setGravityEnable(false);
+    //
+    //                Director::getInstance()->pause();
+    //            }
+    //        }
+    //
+    //    });
+    //
+    //    addChild(stop);
+
     return true;
 }
 
@@ -184,6 +210,20 @@ void NormalModel::update(float delta) {
     moveObstacles(delta);       //移动障碍物
     removeObstacle(delta);      //删除障碍物
     addObstacle(delta);         //添加障碍物
+    checkBgPosition(delta);
+}
+
+Sprite *NormalModel::addBg(const char *bgFileName, float positionY, int zOrder, bool isAddToBgVector) {
+    auto bg = Sprite::create(bgFileName);
+    bg->setAnchorPoint(Vec2::ZERO);
+    bg->setPosition(Vec2(0, positionY));
+    addChild(bg, zOrder);
+    if (isAddToBgVector) {
+        bg->setOpacity(150);
+        _bgs.pushBack(bg);
+    }
+
+    return bg;
 }
 
 //**********************************添加障碍物************************************************
@@ -689,19 +729,23 @@ void NormalModel::moveObstacles(float delta) {
         //设置球为静态  不让他的位置超过屏幕的一半
         _ballBody->setGravityEnable(false);
         _ballBody->setVelocity(Vec2(0, 0));
+
         //障碍物下移
+        // log("v %f, g %f, v/g=%f",v,g,v/g);
+        auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
+        auto easeOut = EaseOut::create(moveBy, 2);
         for (auto obstacle : _obstacles) {
-            //            log("v %f, g %f, v/g=%f",v,g,v/g);
-            auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
-            auto easeOut = EaseOut::create(moveBy, 2);
-            obstacle->runAction(easeOut);
+            obstacle->runAction(easeOut->clone());
         }
 
         //移动faster
         if (_bestScoreOnShow) {
-            auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
-            auto easeOut = EaseOut::create(moveBy, 2);
-            _fasterSprite->runAction(easeOut);
+            _fasterSprite->runAction(easeOut->clone());
+        }
+
+        //移动背景
+        for (auto bg : _bgs) {
+            bg->runAction(easeOut->clone());
         }
 
         //障碍物移动完，设置小球受重力
@@ -719,9 +763,19 @@ void NormalModel::removeObstacle(float delta) {
             _obstacles.eraseObject(obstacle);
         }
     }
+    // faster
     if (_bestScoreOnShow && _fasterSprite->getPosition().y < -20) {
         this->removeChild(_fasterSprite);
         _bestScoreOnShow = false;
+    }
+}
+
+void NormalModel::checkBgPosition(float delta) {
+    // bg
+    for (auto bg : _bgs) {
+        if (bg->getPositionY() < _originSize.height - bg->getContentSize().height) {
+            bg->setPositionY(bg->getPositionY() + bg->getContentSize().height * _bgs.size());
+        }
     }
 }
 

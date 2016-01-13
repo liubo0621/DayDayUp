@@ -49,7 +49,8 @@ void PropsScene::update(float delta) {
     moveObstacles(delta);       //移动障碍物
     removeObstacle(delta);      //删除障碍物
     addObstacle(delta);         //添加障碍物
-    addProps(delta);            //添加道具
+    checkBgPosition(delta);
+    addProps(delta);  //添加道具
 }
 
 //间隔random 个障碍物 添加一个道具
@@ -111,25 +112,26 @@ void PropsScene::moveObstacles(float delta) {
         _ballBody->setGravityEnable(false);
         _ballBody->setVelocity(Vec2(0, 0));
         //障碍物下移
+        // log("v %f, g %f, v/g=%f",v,g,v/g);
+        auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
+        auto easeOut = EaseOut::create(moveBy, 2);
         for (auto obstacle : _obstacles) {
-            //            log("v %f, g %f, v/g=%f",v,g,v/g);
-            auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
-            auto easeOut = EaseOut::create(moveBy, 2);
-            obstacle->runAction(easeOut);
+            obstacle->runAction(easeOut->clone());
         }
 
         //移动道具
         for (auto prop : _props) {
-            auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
-            auto easeOut = EaseOut::create(moveBy, 2);
-            prop->runAction(easeOut);
+            prop->runAction(easeOut->clone());
         }
 
         //移动faster
         if (_bestScoreOnShow) {
-            auto moveBy = MoveBy::create(v / g, Vec2(0, -h));
-            auto easeOut = EaseOut::create(moveBy, 2);
-            _fasterSprite->runAction(easeOut);
+            _fasterSprite->runAction(easeOut->clone());
+        }
+
+        //移动背景
+        for (auto bg : _bgs) {
+            bg->runAction(easeOut->clone());
         }
 
         //障碍物移动完，设置小球受重力

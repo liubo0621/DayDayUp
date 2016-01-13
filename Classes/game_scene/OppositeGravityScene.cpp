@@ -84,6 +84,11 @@ void OppositeGravityModel::moveObstacles(float delta) {
         if (_bestScoreOnShow) {
             _fasterSprite->setPositionY(_fasterSprite->getPositionY() - _moveStep);
         }
+
+        //移动背景
+        for (auto bg : _bgs) {
+            bg->setPositionY(bg->getPositionY() - _moveStep);
+        }
         _moveStep += 2;
     }
 }

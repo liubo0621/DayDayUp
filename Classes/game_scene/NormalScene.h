@@ -37,9 +37,13 @@ public:
     virtual void update(float delta);
     //移动障碍物
     virtual void moveObstacles(float delta);
+
+    Sprite* addBg(const char* bgFileName, float positionY, int zOrder, bool isAddToBgVector = false);
     //添加障碍物
     void addObstacle(float delta);
     void randomAddObstacle(float height);
+
+    void checkBgPosition(float delta);
 
     Sprite* addStack(std::string spriteName, Vec2 anchorPoint, Vec2 position);
     Sprite* addSlideObstacle(std::string spriteName, Vec2 position);
@@ -78,7 +82,9 @@ protected:
 
     PhysicsBody* _ballBody;
 
+    Vector<Sprite*> _bgs;
     Vector<Sprite*> _obstacles;  //障碍物
+
     Sprite* _currentSprite;
     Sprite* _ready_go;
     Sprite* _tip;
@@ -86,6 +92,9 @@ protected:
     LabelBMFont* _scoreLabel;
 
     Size _visibleSize;
+    Size _originSize;
+
+    Vec2 ballVelocit;
 
     EventListenerPhysicsContactWithGroup* _contactListener;
 
