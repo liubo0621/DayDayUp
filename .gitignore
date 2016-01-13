@@ -25,6 +25,8 @@ xcuserdata
 *.pbxuser
 *.DS_Store
 .svn
+proj.ios_mac/DayDayUp.xcodeproj/project.pbxproj
+proj.ios_mac/DayDayUp.xcodeproj/project.xcworkspace/xcuserdata/liubo.xcuserdatad/UserInterfaceState.xcuserstate
 proj.ios_mac/DayDayUp.xcodeproj/*.xcuserstate
 proj.ios_mac/DayDayUp.xcodeproj/*.pbxproj
 *.xcsettings
