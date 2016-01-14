@@ -684,19 +684,23 @@ void NormalModel::obstacle12(double height, float t) {
     auto rectRailWidth = rectRail->getContentSize().width;
     auto rectRailHeight = rectRail->getContentSize().height;
     auto r = rectRailHeight / 2;
+    int rectWidth = 9;
 
     //顺时针 圆角矩形一周
+    //上边中间点
+    auto p0 = Vec2(rectRailWidth / 2, rectRailHeight - rectWidth);
     //右半弧
-    int rectWidth = 9;
     auto p1 = Vec2(rectRailWidth - r, rectRailHeight - rectWidth);
     auto p2 = Vec2(rectRailWidth - rectWidth, rectRailHeight / 2);
     auto p3 = Vec2(rectRailWidth - r, rectWidth);
+    //下边中间点
+    auto p4 = Vec2(rectRailWidth / 2, rectWidth);
     //左半弧
-    auto p4 = Vec2(r, rectWidth);
-    auto p5 = Vec2(rectWidth, rectRailHeight / 2);
-    auto p6 = Vec2(r, rectRailHeight - rectWidth);
+    auto p5 = Vec2(r, rectWidth);
+    auto p6 = Vec2(rectWidth, rectRailHeight / 2);
+    auto p7 = Vec2(r, rectRailHeight - rectWidth);
 
-    auto obstaclePosition = p1;
+    auto obstaclePosition = p0;
     auto leftObstacleTotationLong = addObstacle("obstacle_rotation_long.png", rectRail, obstaclePosition);
     auto rightObstacleTotationLong = addObstacle("obstacle_rotation_long.png", rectRail, obstaclePosition);
     rightObstacleTotationLong->setRotation(90);
