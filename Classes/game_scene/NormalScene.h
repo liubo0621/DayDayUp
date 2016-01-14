@@ -90,7 +90,7 @@ protected:
     Sprite* _ready_go;
     Sprite* _tip;
 
-    LabelBMFont* _scoreLabel;
+    Label* _scoreLabel;
 
     Size _visibleSize;
     Size _originSize;

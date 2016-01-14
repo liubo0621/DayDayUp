@@ -136,9 +136,7 @@ public class AppActivity extends Cocos2dxActivity {
         JNIHelper.init(aHandler);
 
         // 初始化广告
-        initBT();
-
-        addBTInterstitialAD();
+//        initBT();
     }
 
     private void showShare(int n) {
@@ -194,9 +192,9 @@ public class AppActivity extends Cocos2dxActivity {
     public void showInterstitialAD() {
         // TODO Auto-generated method stub
 //        if (!isShowBTbanner) {
-//            addGDTInterstitialAD();
+            addGDTInterstitialAD();
 //        }else{
-            addBTInterstitialAD();
+//            addBTInterstitialAD();
 //        }
     }
 

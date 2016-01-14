@@ -128,8 +128,8 @@ bool NormalModel::init() {
     randomAddObstacle(_visibleSize.height * 0.85);
 
     //分数
-    // 创建LabelBMFont标签对象，参数为显示文字内容、fnt文件
-    _scoreLabel = LabelBMFont::create("", "stagelabel.fnt");
+    _scoreLabel = Label::createWithBMFont("stagelabel.fnt", "");
+    _scoreLabel->enableShadow();
     _scoreLabel->setPosition(_visibleSize.width / 2, _visibleSize.height * 0.92);
     this->addChild(_scoreLabel, 2);
 

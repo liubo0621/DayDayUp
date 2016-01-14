@@ -22,9 +22,7 @@ public:
     virtual void onEnter();
     
     void reduceTime(float delta);
-    
-    virtual void addScore(float delta);
-    
+
     CREATE_FUNC(TimeModel);
     
 private:
