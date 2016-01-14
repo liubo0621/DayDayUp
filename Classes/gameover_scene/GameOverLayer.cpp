@@ -42,12 +42,12 @@ bool GameOver::init() {
     this->addChild(bg);
 
     //游戏结束
-    auto gameover = Sprite::create("gameover.png");
+    auto gameover = Sprite::createWithSpriteFrameName("gameover.png");
     gameover->setPosition(visibleSize.width / 2, visibleSize.height * 0.9);
     this->addChild(gameover);
 
     // board(承载分数 模式 最佳)
-    auto scoreBoard = Sprite::create("scoreBoard.png");
+    auto scoreBoard = Sprite::createWithSpriteFrameName("scoreBoard.png");
     scoreBoard->setPosition(visibleSize.width / 2, visibleSize.height * 0.7);
     this->addChild(scoreBoard);
 
@@ -74,7 +74,7 @@ bool GameOver::init() {
 
     //新纪录
     if (score > bestScore) {
-        auto newBest = Sprite::create("new.png");
+        auto newBest = Sprite::createWithSpriteFrameName("new.png");
         scoreBoard->addChild(newBest);
         newBest->setPosition(Vec2(scoreBoard->getContentSize().width * 0.6, scoreBoard->getContentSize().height * 0.64));
 
@@ -119,21 +119,21 @@ bool GameOver::init() {
     umeng::MobClickCpp::event(gameModel, &dict);
 
     //按钮
-    auto shareBtn = Button::create("gameoverbtn.png");
+    auto shareBtn = Button::create("gameoverbtn.png", "", "", TextureResType::PLIST);
     shareBtn->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 0.4));
     shareBtn->setScale(1.5);
     shareBtn->setTitleText("炫耀");
     shareBtn->setTitleFontSize(40);
     this->addChild(shareBtn);
 
-    auto restarBtn = Button::create("gameoverbtn.png");
+    auto restarBtn = Button::create("gameoverbtn.png", "", "", TextureResType::PLIST);
     restarBtn->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 0.3));
     restarBtn->setScale(1.5);
     restarBtn->setTitleText("再试一次");
     restarBtn->setTitleFontSize(40);
     this->addChild(restarBtn);
 
-    auto gohomeBtn = Button::create("gameoverbtn.png");
+    auto gohomeBtn = Button::create("gameoverbtn.png", "", "", TextureResType::PLIST);
     gohomeBtn->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 0.2));
     gohomeBtn->setScale(1.5);
     gohomeBtn->setTitleText("返回首页");

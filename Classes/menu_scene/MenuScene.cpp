@@ -41,6 +41,8 @@ bool MenuScene::init() {
     _visibleSize = Director::getInstance()->getVisibleSize();
     _originSize = Director::getInstance()->getVisibleOrigin();
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Menu.plist");
+
     //背景
     int random = arc4random() % 3;
     switch (random) {
@@ -68,19 +70,19 @@ bool MenuScene::init() {
     }
 
     //天天向上
-    auto day1 = Sprite::create("menu_0000.png");
+    auto day1 = Sprite::createWithSpriteFrameName("menu_0000.png");
     day1->setPosition(_visibleSize.width * 0.2, _visibleSize.height * 0.78);
     this->addChild(day1);
 
-    auto day2 = Sprite::create("menu_0001.png");
+    auto day2 = Sprite::createWithSpriteFrameName("menu_0001.png");
     day2->setPosition(_visibleSize.width * 0.4, _visibleSize.height * 0.8);
     this->addChild(day2);
 
-    auto go = Sprite::create("menu_0002.png");
+    auto go = Sprite::createWithSpriteFrameName("menu_0002.png");
     go->setPosition(_visibleSize.width * 0.6, _visibleSize.height * 0.78);
     this->addChild(go);
 
-    auto up = Sprite::create("menu_0003.png");
+    auto up = Sprite::createWithSpriteFrameName("menu_0003.png");
     up->setPosition(_visibleSize.width * 0.8, _visibleSize.height * 0.8);
     this->addChild(up);
 
@@ -88,7 +90,7 @@ bool MenuScene::init() {
     addStartBtn();
 
     //选择模式btn
-    _selectModelBtn = Button::create("menu_btn.png");
+    _selectModelBtn = Button::create("menu_btn.png", "", "", TextureResType::PLIST);
     _selectModelBtn->setPosition(Vec2(_visibleSize.width / 5, _visibleSize.height * 0.5));
     auto model = UserDefault::getInstance()->getStringForKey("model", "模式");
     addChild(setBtntext(model.c_str(), _selectModelBtn));
@@ -103,7 +105,7 @@ bool MenuScene::init() {
     });
 
     //选择难度btn
-    _selectDifficultyBtn = Button::create("menu_btn.png");
+    _selectDifficultyBtn = Button::create("menu_btn.png", "", "", TextureResType::PLIST);
     _selectDifficultyBtn->setPosition(Vec2(_visibleSize.width * 4 / 5, _visibleSize.height * 0.54));
     auto difficulty = UserDefault::getInstance()->getStringForKey("difficulty", "难度");
     addChild(setBtntext(difficulty.c_str(), _selectDifficultyBtn));
@@ -135,9 +137,9 @@ bool MenuScene::init() {
     soundBtn->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
     soundBtn->setPosition(Vec2(_visibleSize.width - 15, _originSize.height + 15));
     if (UserDefault::getInstance()->getBoolForKey("isSoundOn", true)) {
-        soundBtn->loadTextureNormal("sound_on.png");
+        soundBtn->loadTextureNormal("sound_on.png", TextureResType::PLIST);
     } else {
-        soundBtn->loadTextureNormal("sound_off.png");
+        soundBtn->loadTextureNormal("sound_off.png", TextureResType::PLIST);
         SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0);
         SimpleAudioEngine::getInstance()->setEffectsVolume(0);
     }
@@ -215,7 +217,7 @@ void MenuScene::addFireWorks(float delta) {
 }
 
 void MenuScene::addStartBtn() {
-    _startBtn = Button::create("start.png");
+    _startBtn = Button::create("start.png", "", "", TextureResType::PLIST);
     _startBtn->setPosition(Vec2(_visibleSize.width / 2, _visibleSize.height * 0.3));
     addChild(_startBtn);
 
@@ -230,11 +232,11 @@ void MenuScene::addStartBtn() {
 }
 
 void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, bool isNew) {
-    auto btn = Button::create("menu_btn.png");
+    auto btn = Button::create("menu_btn.png", "", "", TextureResType::PLIST);
     btn->setPosition(parent->getContentSize() / 2);
     btn->setVisible(false);
     if (isNew) {
-        auto newTip = Sprite::create("menu_new.png");
+        auto newTip = Sprite::createWithSpriteFrameName("menu_new.png");
         btn->addChild(newTip);
         newTip->setPosition(btn->getContentSize());
     }

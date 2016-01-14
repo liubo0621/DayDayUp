@@ -40,6 +40,9 @@ bool NormalModel::init() {
     _obstacles.clear();
     _rank = 0;
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameOver.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Game.plist");
+
     std::string difficulty = UserDefault::getInstance()->getStringForKey("difficulty");
     if (difficulty == EASY) {
         _rank = 1;
@@ -96,13 +99,13 @@ bool NormalModel::init() {
     this->addChild(bottom);
 
     //提示 点击
-    _tip = Sprite::create("tip.png");
+    _tip = Sprite::createWithSpriteFrameName("tip.png");
     _tip->setPosition(_visibleSize.width / 2, _visibleSize.height * 0.3);
     _tip->setScale(2);
     this->addChild(_tip);
 
     // ready go
-    _ready_go = Sprite::create("ready.png");
+    _ready_go = Sprite::createWithSpriteFrameName("ready.png");
     _ready_go->setPosition(_visibleSize.width / 2, _visibleSize.height - _originSize.height + _ready_go->getContentSize().height / 2);
     _ready_go->setScale(2);
     this->addChild(_ready_go, 2);
@@ -113,7 +116,7 @@ bool NormalModel::init() {
     _ready_go->runAction(Sequence::create(easeIn, moveBy, moveBy->reverse(), NULL));
 
     //小球
-    _ball = Sprite::create("ball.png");
+    _ball = Sprite::createWithSpriteFrameName("ball.png");
     _ballBody = PhysicsBody::createCircle(_ball->getContentSize().width / 2 - 10);
     _ballBody->setGravityEnable(false);
     _ballBody->setCategoryBitmask(0x01);
@@ -310,7 +313,7 @@ void NormalModel::randomAddObstacle(float height) {
  *  @return 障碍物
  */
 Sprite *NormalModel::addSlideObstacle(std::string spriteName, Vec2 position) {
-    auto obstacle = Sprite::create(spriteName);
+    auto obstacle = Sprite::createWithSpriteFrameName(spriteName);
     //储存到障碍物集合中
     _obstacles.pushBack(obstacle);
     obstacle->setPosition(position);
@@ -342,7 +345,7 @@ Sprite *NormalModel::addSlideObstacle(std::string spriteName, Vec2 position) {
  *  @return 返回精灵
  */
 Sprite *NormalModel::addStack(std::string spriteName, Vec2 anchorPoint, Vec2 position) {
-    auto obstacle = Sprite::create(spriteName);
+    auto obstacle = Sprite::createWithSpriteFrameName(spriteName);
     //储存到障碍物集合中
     _obstacles.pushBack(obstacle);
     obstacle->setAnchorPoint(anchorPoint);
@@ -373,7 +376,7 @@ Sprite *NormalModel::addStack(std::string spriteName, Vec2 anchorPoint, Vec2 pos
  *  @return 返回精灵
  */
 Sprite *NormalModel::addObstacle(std::string spriteName, Sprite *stack, cocos2d::Vec2 position) {
-    auto obstacle = Sprite::create(spriteName);
+    auto obstacle = Sprite::createWithSpriteFrameName(spriteName);
     stack->addChild(obstacle);
     obstacle->setPosition(position);
 
@@ -415,7 +418,7 @@ Sprite *NormalModel::addObstacle(std::string spriteName, Sprite *stack, cocos2d:
  *  @return 轨道精灵
  */
 Sprite *NormalModel::addRail(const char *fileName, double height) {
-    auto rail = Sprite::create(fileName);
+    auto rail = Sprite::createWithSpriteFrameName(fileName);
     double x = 0;
     if (arc4random() % 2) {
         x = _visibleSize.width * 0.6;
@@ -822,7 +825,7 @@ void NormalModel::addScore(float delta) {
             _bestScoreIsShow = true;
             _bestScoreOnShow = true;
 
-            _fasterSprite = Sprite::create("faster.png");
+            _fasterSprite = Sprite::createWithSpriteFrameName("faster.png");
             _fasterSprite->setPosition(_visibleSize.width / 2, obstacleHeight);
             this->addChild(_fasterSprite, -1);
 

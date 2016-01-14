@@ -76,20 +76,20 @@ void PropsScene::addProps(float delta) {
             if (_isScaleBig) {
                 return;
             }
-            prop = Sprite::create("capsule.png");
+            prop = Sprite::createWithSpriteFrameName("capsule.png");
             prop->setName(SCALE_SMAL);
         } else if (rand == 1) {
             if (_isAddPropected || _isScaleBig) {
                 return;
             }
-            prop = Sprite::create("shield.png");
+            prop = Sprite::createWithSpriteFrameName("shield.png");
             prop->setName(PROTECTION);
             _isAddPropected = true;
         } else if (rand == 2) {
             if (_isScaleSmal) {
                 return;
             }
-            prop = Sprite::create("scale_big.png");
+            prop = Sprite::createWithSpriteFrameName("scale_big.png");
             prop->setName(INVINCIBLE);
         }
 
@@ -166,7 +166,7 @@ bool PropsScene::onContactBegin(PhysicsContact& contact) {
                 if (prop->getName() == PROTECTION) {
                     _isPropected = true;
                     //添加保护罩
-                    auto protection = Sprite::create("shield.png");
+                    auto protection = Sprite::createWithSpriteFrameName("shield.png");
                     protection->setPosition(_ball->getContentSize() / 2);
                     protection->setTag(PROTECTION_TAG);
                     _ball->addChild(protection);
