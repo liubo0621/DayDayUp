@@ -26,7 +26,7 @@ bool TimeModel::init() {
     }
 
     //时间
-    _leftTime = 10;
+    _leftTime = 60;
 
     _timeLable = Label::createWithSystemFont(StringUtils::format("时间：%d", _leftTime), "", 60);
     _timeLable->setAnchorPoint(Vec2(1, 1));

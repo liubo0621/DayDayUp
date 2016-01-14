@@ -24,12 +24,10 @@ bool DarkModel::init() {
     if (!NormalModel::init()) {
         return false;
     }
-    auto visibleSize = Director::getInstance()->getVisibleSize();
 
     //黑布
-    auto dark = Sprite::create("bg.png");
+    auto dark = LayerColor::create();
     dark->setColor(Color3B::BLACK);
-    dark->setPosition(visibleSize / 2);
     dark->setOpacity(0);
     this->addChild(dark, 10);
 
@@ -38,7 +36,7 @@ bool DarkModel::init() {
     auto fadeIn = FadeIn::create(2);
 
     auto delay = DelayTime::create(5);
-    auto delay2 = DelayTime::create(1.5);
+    auto delay2 = DelayTime::create(3);
     auto repeat = RepeatForever::create(Sequence::create(fadeOut, delay, fadeIn, delay2, NULL));
     dark->runAction(repeat);
 

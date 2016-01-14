@@ -137,6 +137,8 @@ public class AppActivity extends Cocos2dxActivity {
 
         // 初始化广告
         initBT();
+
+        addBTInterstitialAD();
     }
 
     private void showShare(int n) {
@@ -151,7 +153,7 @@ public class AppActivity extends Cocos2dxActivity {
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.liubo.DayDayUp");
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("玩了下《一发不止》这个游，感觉超虐啊，得" + n + "分真不容易，来炫耀下！");
+        oks.setText("我在《一发不止》这个游戏中得了" + n + "分，还有谁？ 求超越！");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         // String url="file:///android_asset/DayDayUp.png";
         // oks.setImagePath(url);// 确保SDcard下面存在此张图片
@@ -180,22 +182,22 @@ public class AppActivity extends Cocos2dxActivity {
 
     // 展示广告
     public void showBannerAD() {
-        addBTBannerAD();
+//        addBTBannerAD();
 //        isShowBTbanner = true;
 //
 //        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
-//            addGDTbannerAD();
+            addGDTbannerAD();
 //            isShowBTbanner = false;
 //        }
     }
 
     public void showInterstitialAD() {
         // TODO Auto-generated method stub
-        if (!isShowBTbanner) {
-            addGDTInterstitialAD();
-        }else{
+//        if (!isShowBTbanner) {
+//            addGDTInterstitialAD();
+//        }else{
             addBTInterstitialAD();
-        }
+//        }
     }
 
     public void deleteBannerAd() {
