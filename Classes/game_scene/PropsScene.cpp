@@ -16,12 +16,12 @@
 #define PROTECTION_TAG 11
 #define BLINK_TIME 1
 #define PROP_ACTIVE_TIME 10
-#define ADD_PROP_RANDOM_MAX 8
-#define ADD_PROP_RANDOM_MIN 3
+#define ADD_PROP_RANDOM_MAX 15
+#define ADD_PROP_RANDOM_MIN 8
 
 Scene* PropsScene::createScene() {
     auto scene = Scene::createWithPhysics();
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vec2(0, -2000));
 
     auto layer = PropsScene::create();
@@ -35,6 +35,7 @@ bool PropsScene::init() {
     if (!NormalModel::init()) {
         return false;
     }
+
     return true;
 }
 
@@ -57,10 +58,12 @@ void PropsScene::addProps(float delta) {
     if (_score > 0 && _addApropMapScore != _score) {
         _addApropMapScore = _score;
 
-        if (_random == -1) {
+        if (_isBegin) {
+            _isBegin = false;
+            _random = random_a_b(1, ADD_PROP_RANDOM_MIN);
+        } else if (_random == -1) {
             _random = random_a_b(ADD_PROP_RANDOM_MIN, ADD_PROP_RANDOM_MAX);
         }
-        _random = 1;
 
         if (_score % _random > 0) {
             return;
@@ -76,13 +79,16 @@ void PropsScene::addProps(float delta) {
             prop = Sprite::create("capsule.png");
             prop->setName(SCALE_SMAL);
         } else if (rand == 1) {
-            if (_isAddPropected) {
+            if (_isAddPropected || _isScaleBig) {
                 return;
             }
             prop = Sprite::create("shield.png");
             prop->setName(PROTECTION);
             _isAddPropected = true;
         } else if (rand == 2) {
+            if (_isScaleSmal) {
+                return;
+            }
             prop = Sprite::create("scale_big.png");
             prop->setName(INVINCIBLE);
         }
@@ -147,6 +153,7 @@ void PropsScene::moveObstacles(float delta) {
     }
 }
 
+// body group : ball 2; prop 1; obstacle -1
 bool PropsScene::onContactBegin(PhysicsContact& contact) {
     log("onContactbegin....");
     auto body = contact.getShapeB()->getBody();  //道具 group ＝ 1
@@ -211,11 +218,21 @@ bool PropsScene::onContactBegin(PhysicsContact& contact) {
                                               NULL));
         }
 
-    } else if (!_isPropected) {
+    } else if (_isScaleBig) {  // 无敌
+        if (body->getGroup() == -1) {
+            body->setGravityEnable(true);
+            body->setVelocity(Vec2(0, 1000));
+        }
+    }
+
+    else if (!_isPropected) {
         gameOver();
     }
 
     return false;
+}
+
+void PropsScene::hitObstacle(PhysicsBody* body) {
 }
 
 void PropsScene::delayRemveProps(cocos2d::Sprite* prop) {

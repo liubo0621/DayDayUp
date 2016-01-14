@@ -9,7 +9,7 @@
 #include "Constants.h"
 #include "GameOverLayer.h"
 #include "NormalScene.h"
-#include "cocosGUI.h"
+#include "ui/cocosGUI.h"
 
 using namespace ui;
 
@@ -17,7 +17,7 @@ using namespace ui;
 
 Scene *NormalModel::createScene() {
     auto scene = Scene::createWithPhysics();
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vec2(0, -2000));
 
     auto layer = NormalModel::create();
@@ -141,37 +141,37 @@ bool NormalModel::init() {
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
-    //暂停 开始
-    ballVelocit = Vec2(0, 0);
-    auto pause = Button::create();
-    pause->loadTextureNormal("pause.png");
-    pause->setTitleFontSize(50);
-    pause->setAnchorPoint(Vec2(0, 1));
-    pause->setPosition(Vec2(15, _visibleSize.height - _originSize.height - 10));
-    pause->addTouchEventListener([=](Ref *sender, Widget::TouchEventType type) {
-        if (type == Widget::TouchEventType::ENDED) {
-            if (Director::getInstance()->isPaused()) {  //开始
-                pause->loadTextureNormal("pause.png");
-                Director::getInstance()->resume();
-                if (!_firstTouch) {
-                    _ballBody->setVelocity(ballVelocit);
-                    _ballBody->setGravityEnable(true);
-                }
-
-            } else {  //暂停
-                ballVelocit.y = _ballBody->getVelocity().y;
-                pause->loadTextureNormal("resume.png");
-
-                _ballBody->setVelocity(Vec2(0, 0));
-                _ballBody->setGravityEnable(false);
-
-                Director::getInstance()->pause();
-            }
-        }
-
-    });
-
-    addChild(pause);
+    //    //暂停 开始
+    //    ballVelocit = Vec2(0, 0);
+    //    auto pause = Button::create();
+    //    pause->loadTextureNormal("pause.png");
+    //    pause->setTitleFontSize(50);
+    //    pause->setAnchorPoint(Vec2(0, 1));
+    //    pause->setPosition(Vec2(15, _visibleSize.height - _originSize.height - 10));
+    //    pause->addTouchEventListener([=](Ref *sender, Widget::TouchEventType type) {
+    //        if (type == Widget::TouchEventType::ENDED) {
+    //            if (Director::getInstance()->isPaused()) {  //开始
+    //                pause->loadTextureNormal("pause.png");
+    //                Director::getInstance()->resume();
+    //                if (!_firstTouch) {
+    //                    _ballBody->setVelocity(ballVelocit);
+    //                    _ballBody->setGravityEnable(true);
+    //                }
+    //
+    //            } else {  //暂停
+    //                ballVelocit.y = _ballBody->getVelocity().y;
+    //                pause->loadTextureNormal("resume.png");
+    //
+    //                _ballBody->setVelocity(Vec2(0, 0));
+    //                _ballBody->setGravityEnable(false);
+    //
+    //                Director::getInstance()->pause();
+    //            }
+    //        }
+    //
+    //    });
+    //
+    //    addChild(pause);
 
     return true;
 }
@@ -322,8 +322,11 @@ Sprite *NormalModel::addSlideObstacle(std::string spriteName, Vec2 position) {
     body->setCategoryBitmask(0x01);
     body->setContactTestBitmask(0x01);
     body->setCollisionBitmask(0x01);
-    body->setGroup(0);
+    body->setGroup(-1);
+    body->setDynamic(true);
+    body->setGravityEnable(false);
 
+    _obstaclesBody.pushBack(body);
     obstacle->setPhysicsBody(body);
 
     return obstacle;
@@ -380,8 +383,11 @@ Sprite *NormalModel::addObstacle(std::string spriteName, Sprite *stack, cocos2d:
     body->setCategoryBitmask(0x01);
     body->setContactTestBitmask(0x01);
     body->setCollisionBitmask(0x01);
-    body->setGroup(0);
+    body->setGroup(-1);
+    body->setDynamic(true);
+    body->setGravityEnable(false);
 
+    _obstaclesBody.pushBack(body);
     obstacle->setPhysicsBody(body);
 
     //闪烁 障碍物 难度 超难
@@ -842,7 +848,7 @@ void NormalModel::gameOver() {
 
     _ball->stopAllActions();
     _ball->setVisible(false);
-    this->runAction(Sequence::create(DelayTime::create(2), CallFunc::create([=] { _ball->removeFromParent(); }), NULL));
+    _ballBody->removeFromWorld();
 
     UserDefault::getInstance()->setIntegerForKey("score", _score);
 

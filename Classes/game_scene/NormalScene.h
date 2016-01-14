@@ -83,7 +83,8 @@ protected:
     PhysicsBody* _ballBody;
 
     Vector<Sprite*> _bgs;
-    Vector<Sprite*> _obstacles;  //障碍物
+    Vector<Sprite*> _obstacles;           //障碍物  桩和侧滑障碍物
+    Vector<PhysicsBody*> _obstaclesBody;  //具体的障碍物 （风扇 侧滑障碍物）
 
     Sprite* _currentSprite;
     Sprite* _ready_go;

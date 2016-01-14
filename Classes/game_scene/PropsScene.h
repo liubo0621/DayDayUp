@@ -17,13 +17,13 @@ public:
     virtual bool init();
     virtual void update(float delta);
     virtual void moveObstacles(float delta);
+    virtual bool onContactBegin(PhysicsContact& contact);
 
     void addProps(float delta);
     void delayRemveProps(Sprite* prop);
+    void hitObstacle(PhysicsBody* body);
 
     int random_a_b(int min, int max);
-
-    virtual bool onContactBegin(PhysicsContact& contact);
 
     CREATE_FUNC(PropsScene);
 
@@ -38,6 +38,7 @@ private:
     bool _isScaleBig = false;
     bool _isAddPropected = false;
     bool _isAttached = false;
+    bool _isBegin = true;
 
     Sequence* _scaleAction;
     Sequence* _protetedAcTion;

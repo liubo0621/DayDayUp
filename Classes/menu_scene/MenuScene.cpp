@@ -43,7 +43,6 @@ bool MenuScene::init() {
 
     //背景
     int random = arc4random() % 3;
-    random = 0;
     switch (random) {
         case 0: {
             auto bg1 = Sprite::create("menu_bg1.png");
@@ -183,6 +182,20 @@ bool MenuScene::init() {
 
     SimpleAudioEngine::getInstance()->playBackgroundMusic("bg_country.mp3", true);
 
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [](Touch* touch, Event* event) { return true; };
+    touchListener->onTouchEnded = [=](Touch* touch, Event* event) {
+        if (_isShow) {
+            if (_selectDifficultyBtn->getPositionX() > _visibleSize.width) {
+                MenuScene::dissmissMenuBtn(MenuBtnType::MODEL, SHOW_MODEL_MENU_NUM);
+            } else {
+                MenuScene::dissmissMenuBtn(MenuBtnType::DIFFICULTY, SHOW_DIFFICULTY_MENU_NUM);
+            }
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
     return true;
 }
 
@@ -233,7 +246,7 @@ void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, b
             if (type == Widget::TouchEventType::ENDED) {
                 MenuScene::dissmissMenuBtn(MenuBtnType::DIFFICULTY, SHOW_DIFFICULTY_MENU_NUM);
                 UserDefault::getInstance()->setStringForKey("difficulty", text);
-                scheduleOnce([=](float dt) { setBtntext(text, _selectDifficultyBtn); }, MOVE_TIME, "set diffituly btn text");
+                setBtntext(text, _selectDifficultyBtn);
             }
 
         });
@@ -244,7 +257,7 @@ void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, b
             if (type == Widget::TouchEventType::ENDED) {
                 MenuScene::dissmissMenuBtn(MenuBtnType::MODEL, SHOW_MODEL_MENU_NUM);
                 UserDefault::getInstance()->setStringForKey("model", text);
-                scheduleOnce([=](float dt) { setBtntext(text, _selectModelBtn); }, MOVE_TIME, "set model btn text");
+                setBtntext(text, _selectModelBtn);
             }
         });
     }
@@ -269,6 +282,7 @@ Button* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) {
     label->setPosition(btn->getContentSize() / 2);
     label->setTag(10);
     label->setTextColor(_btnTextColor);
+
     btn->addChild(label);
 
     //    auto clippingNode = ClippingNode::create();
