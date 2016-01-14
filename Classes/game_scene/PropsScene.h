@@ -35,6 +35,7 @@ private:
 
     bool _isPropected = false;
     bool _isScaleSmal = false;
+    bool _isScaleBig = false;
     bool _isAddPropected = false;
     bool _isAttached = false;
 

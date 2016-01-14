@@ -103,7 +103,7 @@ bool NormalModel::init() {
 
     // ready go
     _ready_go = Sprite::create("ready.png");
-    _ready_go->setPosition(_visibleSize.width / 2, _visibleSize.height + _ready_go->getContentSize().height / 2);
+    _ready_go->setPosition(_visibleSize.width / 2, _visibleSize.height - _originSize.height + _ready_go->getContentSize().height / 2);
     _ready_go->setScale(2);
     this->addChild(_ready_go, 2);
     //动作
@@ -141,33 +141,37 @@ bool NormalModel::init() {
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_contactListener, this);
 
-    //    //暂停 开始
-    //    ballVelocit = Vec2(0, 0);
-    //    auto stop = Button::create();
-    //    stop->setTitleText("暂停");
-    //    stop->setTitleFontSize(50);
-    //    stop->setAnchorPoint(Vec2(0, 1));
-    //    stop->setPosition(Vec2(10, _visibleSize.height - 10));
-    //    stop->addTouchEventListener([=](Ref *sender, Widget::TouchEventType type) {
-    //        if (type == Widget::TouchEventType::ENDED) {
-    //            if (Director::getInstance()->isPaused()) {
-    //                stop->setTitleText("暂停");
-    //                Director::getInstance()->resume();
-    //                _ballBody->setVelocity(ballVelocit);
-    //                _ballBody->setGravityEnable(true);
-    //            } else {
-    //                ballVelocit.y = _ballBody->getVelocity().y;
-    //                stop->setTitleText("开始");
-    //                _ballBody->setVelocity(Vec2(0, 0));
-    //                _ballBody->setGravityEnable(false);
-    //
-    //                Director::getInstance()->pause();
-    //            }
-    //        }
-    //
-    //    });
-    //
-    //    addChild(stop);
+    //暂停 开始
+    ballVelocit = Vec2(0, 0);
+    auto pause = Button::create();
+    pause->loadTextureNormal("pause.png");
+    pause->setTitleFontSize(50);
+    pause->setAnchorPoint(Vec2(0, 1));
+    pause->setPosition(Vec2(15, _visibleSize.height - _originSize.height - 10));
+    pause->addTouchEventListener([=](Ref *sender, Widget::TouchEventType type) {
+        if (type == Widget::TouchEventType::ENDED) {
+            if (Director::getInstance()->isPaused()) {  //开始
+                pause->loadTextureNormal("pause.png");
+                Director::getInstance()->resume();
+                if (!_firstTouch) {
+                    _ballBody->setVelocity(ballVelocit);
+                    _ballBody->setGravityEnable(true);
+                }
+
+            } else {  //暂停
+                ballVelocit.y = _ballBody->getVelocity().y;
+                pause->loadTextureNormal("resume.png");
+
+                _ballBody->setVelocity(Vec2(0, 0));
+                _ballBody->setGravityEnable(false);
+
+                Director::getInstance()->pause();
+            }
+        }
+
+    });
+
+    addChild(pause);
 
     return true;
 }

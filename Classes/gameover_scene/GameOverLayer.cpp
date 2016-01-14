@@ -37,8 +37,7 @@ bool GameOver::init() {
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    auto bg = Sprite::create("gameoverBg.png");
-    bg->setScale(visibleSize.width, visibleSize.height);
+    auto bg = LayerColor::create(Color4B::BLACK);
     bg->setOpacity(95);
     this->addChild(bg);
 
@@ -84,7 +83,7 @@ bool GameOver::init() {
     }
 
     //最佳
-    auto bestScoreLabel = Label::createWithSystemFont(StringUtils::format("%d", bestScore), "arial.ttf", 70);
+    auto bestScoreLabel = Label::createWithSystemFont(StringUtils::format("%d", bestScore), "", 70);
     bestScoreLabel->setColor(Color3B(0, 0, 0));
     scoreBoard->addChild(bestScoreLabel);
     bestScoreLabel->setPosition(scoreBoard->getContentSize().width * 0.695, scoreBoard->getContentSize().height * 0.64);

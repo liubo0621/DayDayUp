@@ -29,7 +29,7 @@ public:
     void addWave(Sprite *sender);    //破浪效果
     void addFireWorks(float delta);  //烟花
 
-    ClippingNode *setBtntext(const char *text, Button *btn);
+    Button *setBtntext(const char *text, Button *btn);
 
     void showMenuBtn(MenuBtnType type, int startAngle, int rotateAngle, bool isClockwise, int r, int num);
     void dissmissMenuBtn(MenuBtnType type, int num);
@@ -48,6 +48,8 @@ protected:
     Button *_selectDifficultyBtn;
     Button *_selectModelBtn;
     Button *_startBtn;
+
+    Color4B _btnTextColor;
 
     bool _isShow = false;
 };

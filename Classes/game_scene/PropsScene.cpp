@@ -21,7 +21,7 @@
 
 Scene* PropsScene::createScene() {
     auto scene = Scene::createWithPhysics();
-    //    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     scene->getPhysicsWorld()->setGravity(Vec2(0, -2000));
 
     auto layer = PropsScene::create();
@@ -35,7 +35,6 @@ bool PropsScene::init() {
     if (!NormalModel::init()) {
         return false;
     }
-
     return true;
 }
 
@@ -61,6 +60,7 @@ void PropsScene::addProps(float delta) {
         if (_random == -1) {
             _random = random_a_b(ADD_PROP_RANDOM_MIN, ADD_PROP_RANDOM_MAX);
         }
+        _random = 1;
 
         if (_score % _random > 0) {
             return;
@@ -68,8 +68,11 @@ void PropsScene::addProps(float delta) {
         _random = -1;
 
         Sprite* prop = nullptr;
-        auto rand = arc4random() % 2;
+        auto rand = arc4random() % 3;
         if (rand == 0) {
+            if (_isScaleBig) {
+                return;
+            }
             prop = Sprite::create("capsule.png");
             prop->setName(SCALE_SMAL);
         } else if (rand == 1) {
@@ -79,6 +82,9 @@ void PropsScene::addProps(float delta) {
             prop = Sprite::create("shield.png");
             prop->setName(PROTECTION);
             _isAddPropected = true;
+        } else if (rand == 2) {
+            prop = Sprite::create("scale_big.png");
+            prop->setName(INVINCIBLE);
         }
 
         prop->setPosition(_visibleSize.width / 2, _visibleSize.height * 1.2);
@@ -169,6 +175,18 @@ bool PropsScene::onContactBegin(PhysicsContact& contact) {
                     auto scaleBack = ScaleTo::create(0.2, 1, 1);
                     _scaleAction = Sequence::create(scaleSmal, DelayTime::create(PROP_ACTIVE_TIME), blink, scaleBack, CallFunc::create([=] { _isScaleSmal = false; }), NULL);
                     _isScaleSmal = true;
+                    _ball->runAction(_scaleAction);
+                }
+                //无敌道具
+                else if (prop->getName() == INVINCIBLE) {
+                    if (_isScaleBig) {
+                        _ball->stopAction(_scaleAction);
+                    }
+                    auto blink = Blink::create(BLINK_TIME, 3);
+                    auto scaleBig = ScaleTo::create(0.2, 2, 2);
+                    auto scaleBack = ScaleTo::create(0.2, 1, 1);
+                    _scaleAction = Sequence::create(scaleBig, DelayTime::create(PROP_ACTIVE_TIME), blink, scaleBack, CallFunc::create([=] { _isScaleBig = false; }), NULL);
+                    _isScaleBig = true;
                     _ball->runAction(_scaleAction);
                 }
 

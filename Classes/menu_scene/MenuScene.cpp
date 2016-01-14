@@ -43,23 +43,27 @@ bool MenuScene::init() {
 
     //背景
     int random = arc4random() % 3;
+    random = 0;
     switch (random) {
         case 0: {
             auto bg1 = Sprite::create("menu_bg1.png");
             bg1->setPosition(_visibleSize / 2);
             this->addChild(bg1, -2);
+            _btnTextColor = Color4B(167, 132, 191, -27);
             break;
         }
         case 1: {
             auto bg2 = Sprite::create("menu_bg2.png");
             bg2->setPosition(_visibleSize / 2);
             this->addChild(bg2, -2);
+            _btnTextColor = Color4B(84, 229, 189, -48);
             break;
         }
         case 2: {
             auto bg3 = Sprite::create("menu_bg3.png");
             bg3->setPosition(_visibleSize / 2);
             this->addChild(bg3, -2);
+            _btnTextColor = Color4B(151, 208, 165, -26);
             break;
         }
     }
@@ -221,14 +225,15 @@ void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, b
         btn->addChild(newTip);
         newTip->setPosition(btn->getContentSize());
     }
+
     parent->addChild(setBtntext(text, btn));
     if (type == MenuBtnType::DIFFICULTY) {
         _difficultyBtns.pushBack(btn);
         btn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
             if (type == Widget::TouchEventType::ENDED) {
-                setBtntext(text, _selectDifficultyBtn);
                 MenuScene::dissmissMenuBtn(MenuBtnType::DIFFICULTY, SHOW_DIFFICULTY_MENU_NUM);
                 UserDefault::getInstance()->setStringForKey("difficulty", text);
+                scheduleOnce([=](float dt) { setBtntext(text, _selectDifficultyBtn); }, MOVE_TIME, "set diffituly btn text");
             }
 
         });
@@ -237,9 +242,9 @@ void MenuScene::addMenuBtn(Button* parent, const char* text, MenuBtnType type, b
         _modelBtns.pushBack(btn);
         btn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
             if (type == Widget::TouchEventType::ENDED) {
-                setBtntext(text, _selectModelBtn);
                 MenuScene::dissmissMenuBtn(MenuBtnType::MODEL, SHOW_MODEL_MENU_NUM);
                 UserDefault::getInstance()->setStringForKey("model", text);
+                scheduleOnce([=](float dt) { setBtntext(text, _selectModelBtn); }, MOVE_TIME, "set model btn text");
             }
         });
     }
@@ -252,7 +257,7 @@ void MenuScene::addWave(Sprite* sender) {
     sender->runAction(action);
 }
 
-ClippingNode* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) {
+Button* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) {
     if (btn->getChildByTag(10) != nullptr) {
         static_cast<Label*>(btn->getChildByTag(10))->setString(text);
         return nullptr;
@@ -263,15 +268,16 @@ ClippingNode* MenuScene::setBtntext(const char* text, cocos2d::ui::Button* btn) 
     label->setSystemFontSize(50);
     label->setPosition(btn->getContentSize() / 2);
     label->setTag(10);
+    label->setTextColor(_btnTextColor);
     btn->addChild(label);
 
-    auto clippingNode = ClippingNode::create();
-    clippingNode->setStencil(label);
-    clippingNode->setInverted(true);
-    clippingNode->setAlphaThreshold(0.04);
-    clippingNode->setTag(20);
-    clippingNode->addChild(btn);
-    return clippingNode;
+    //    auto clippingNode = ClippingNode::create();
+    //    clippingNode->setStencil(label);
+    //    clippingNode->setInverted(true);
+    //    clippingNode->setAlphaThreshold(0.04);
+    //    clippingNode->setTag(20);
+    //    clippingNode->addChild(btn);
+    return btn;
 }
 
 void MenuScene::showMenuBtn(MenuBtnType type, int startAngle, int rotateAngle, bool isClockwise, int r, int num) {
