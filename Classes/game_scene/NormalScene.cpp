@@ -125,7 +125,7 @@ bool NormalModel::init() {
     _ballBody->setGroup(0);
     _ball->setPhysicsBody(_ballBody);
     _ball->setPosition(_visibleSize / 2);
-    this->addChild(_ball, 1000);
+    this->addChild(_ball, 10);
 
     //添加障碍物
     randomAddObstacle(_visibleSize.height * 0.85);
@@ -254,7 +254,7 @@ void NormalModel::randomAddObstacle(float height) {
 
     int randT = arc4random() % 3 - 1;
 
-    //        random=0;
+    //    random = 10;
 
     //两个长的 顺时针旋转
     if (random == 0) {
@@ -706,13 +706,15 @@ void NormalModel::obstacle12(double height, float t) {
     rightObstacleTotationLong->setRotation(90);
 
     auto array = PointArray::create(20);
+    array->addControlPoint(p0);
     array->addControlPoint(p1);
     array->addControlPoint(p2);
     array->addControlPoint(p3);
     array->addControlPoint(p4);
     array->addControlPoint(p5);
     array->addControlPoint(p6);
-    array->addControlPoint(p1);
+    array->addControlPoint(p7);
+    array->addControlPoint(p0);
 
     //    作用：创建一个样条曲线轨迹的动作
     //    参数1：完成轨迹所需的时间

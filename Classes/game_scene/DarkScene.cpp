@@ -29,7 +29,7 @@ bool DarkModel::init() {
     auto dark = LayerColor::create();
     dark->setColor(Color3B::BLACK);
     dark->setOpacity(0);
-    this->addChild(dark, 10);
+    this->addChild(dark, 100);
 
     //闪烁
     auto fadeOut = FadeOut::create(2);

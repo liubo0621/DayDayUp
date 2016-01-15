@@ -148,12 +148,12 @@ bool MenuScene::init() {
             if (UserDefault::getInstance()->getBoolForKey("isSoundOn", true)) {
                 SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0);
                 SimpleAudioEngine::getInstance()->setEffectsVolume(0);
-                soundBtn->loadTextureNormal("sound_off.png");
+                soundBtn->loadTextureNormal("sound_off.png", TextureResType::PLIST);
                 UserDefault::getInstance()->setBoolForKey("isSoundOn", false);
             } else {
                 SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1);
                 SimpleAudioEngine::getInstance()->setEffectsVolume(1);
-                soundBtn->loadTextureNormal("sound_on.png");
+                soundBtn->loadTextureNormal("sound_on.png", TextureResType::PLIST);
                 UserDefault::getInstance()->setBoolForKey("isSoundOn", true);
             }
         }
