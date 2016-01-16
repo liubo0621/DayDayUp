@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>Resource/game/style2/ball.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{840,2},{180,180}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{180,180}</string>
+			</dict>
+			<key>Resource/game/style2/bottom.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{2,2},{1073,110}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{1073,110}</string>
+			</dict>
+			<key>Resource/game/style2/obstacle.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{286,2},{550,100}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{550,100}</string>
+			</dict>
+			<key>Resource/game/style2/obstacle_bar.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{2,1079},{280,12}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{280,12}</string>
+			</dict>
+			<key>Resource/game/style2/obstacle_rotation_long.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{116,2},{710,50}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{710,50}</string>
+			</dict>
+			<key>Resource/game/style2/obstacle_rotation_short.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{170,2},{346,50}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{346,50}</string>
+			</dict>
+		</dict>
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>textureFileName</key>
+			<string>game_style2.png</string>
+			<key>realTextureFileName</key>
+			<string>game_style2.png</string>
+			<key>size</key>
+			<string>{1024,2048}</string>
+		</dict>
+		<key>texture</key>
+		<dict>
+			<key>width</key>
+			<integer>1024</integer>
+			<key>height</key>
+			<integer>2048</integer>
+		</dict>
+	</dict>
+</plist>
