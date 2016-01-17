@@ -144,11 +144,14 @@ bool GameOver::init() {
     //添加按钮点击事件
     shareBtn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
         if (type == Widget::TouchEventType::ENDED) {
-            log("share...");
-            const char* path = screenShoot();
-            auto imgFile = StringUtils::format("%scannotstop.jpg", path);
-            log("imgPath %s", imgFile.c_str());
-            AdManagerProtocol::getInstance()->share(imgFile.c_str(), score);
+            shareBtn->setEnabled(false);
+            shareBtn->setTitleText("截屏中...");
+            auto callBack = [=](const char* filePath, const char* fileName) {
+                shareBtn->setEnabled(true);
+                shareBtn->setTitleText("炫耀");
+                AdManagerProtocol::getInstance()->showAD(score);
+            };
+            GameOver::screenShoot(callBack, "cannotstop.jpg", Image::Format::JPG);
         }
     });
 
@@ -185,9 +188,15 @@ bool GameOver::init() {
     return true;
 }
 
-const char* GameOver::screenShoot() {
+void GameOver::screenShoot(ScreenShootCallback& callback, const char* fileName, Image::Format format) {
+    //    const char* filePath = FileUtils::getInstance()->getWritablePath().c_str();
+    //    auto file = StringUtils::format("%s%s", filePath, fileName).c_str();
+    //    if (FileUtils::getInstance()->isFileExist(file)) {
+    //        FileUtils::getInstance()->removeFile(file);
+    //    }
+
     //定义一个屏幕大小的渲染纹理
-    RenderTexture* pScreen = RenderTexture::create(visibleSize.width, visibleSize.height, kCCTexture2DPixelFormat_RGBA8888);
+    RenderTexture* pScreen = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888);
     //获得当前的场景指针
     Scene* pCurScene = Director::getInstance()->getRunningScene();
     //渲染纹理开始捕捉
@@ -196,10 +205,13 @@ const char* GameOver::screenShoot() {
     pCurScene->visit();
     //结束捕捉
     pScreen->end();
-    //保存为png
-    pScreen->saveToFile("cannotstop.png", kCCImageFormatPNG);  //图片质量不好
-    //保存为jpg
-    //    pScreen->saveToFile("cannotstop.jpg", kCCImageFormatJPEG);
+    pScreen->saveToFile(fileName, format, false);
 
-    return FileUtils::getInstance()->getWritablePath().c_str();
+    auto scheduleCallBack = [callback, fileName](float dt) {
+        if (callback) {
+            const char* filePath = FileUtils::getInstance()->getWritablePath().c_str();
+            callback(filePath, fileName);
+        }
+    };
+    Director::getInstance()->getRunningScene()->getScheduler()->schedule(scheduleCallBack, this, 0.0f, 0, 3.0f, false, "screenshot");
 }

@@ -4,17 +4,6 @@
 <dict>
 	<key>frames</key>
 	<dict>
-		<key>ball.png</key>
-		<dict>
-			<key>frame</key>
-			<string>{{2,1190},{200,200}}</string>
-			<key>offset</key>
-			<string>{0,0}</string>
-			<key>rotated</key>
-			<false/>
-			<key>sourceSize</key>
-			<string>{200,200}</string>
-		</dict>
 		<key>bottom.png</key>
 		<dict>
 			<key>frame</key>
@@ -40,7 +29,7 @@
 		<key>obstacle_bar.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{206,1190},{280,100}}</string>
+			<string>{{186,1244},{280,100}}</string>
 			<key>offset</key>
 			<string>{0,0}</string>
 			<key>rotated</key>
@@ -51,7 +40,7 @@
 		<key>obstacle_rotation_long.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{2,1394},{710,50}}</string>
+			<string>{{2,1190},{710,50}}</string>
 			<key>offset</key>
 			<string>{0,0}</string>
 			<key>rotated</key>
@@ -62,13 +51,24 @@
 		<key>obstacle_rotation_short.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{2,1448},{346,50}}</string>
+			<string>{{2,1428},{346,50}}</string>
 			<key>offset</key>
 			<string>{0,0}</string>
 			<key>rotated</key>
 			<false/>
 			<key>sourceSize</key>
 			<string>{346,50}</string>
+		</dict>
+		<key>ball.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2,1244},{180,180}}</string>
+			<key>offset</key>
+			<string>{0,0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceSize</key>
+			<string>{180,180}</string>
 		</dict>
 	</dict>
 	<key>metadata</key>

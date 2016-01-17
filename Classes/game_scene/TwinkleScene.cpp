@@ -29,9 +29,10 @@ bool TwinkleModel::init() {
     auto fadeOut = FadeOut::create(2);
     auto fadeIn = FadeIn::create(2);
 
-    auto delay = DelayTime::create(2);
+    auto delay = DelayTime::create(3);
     auto repeat = RepeatForever::create(Sequence::create(fadeOut, delay, fadeIn, delay, NULL));
     _ball->runAction(repeat);
+    _ball->getChildByName("ball_shadow")->runAction(repeat->clone());
 
     return true;
 }

@@ -89,7 +89,8 @@ bool NormalModel::init() {
     bg->getTexture()->setAliasTexParameters();
     auto bg2 = addBg(StringUtils::format("%s%s", bgColor, "_bg_middle.jpg").c_str(), _originSize.height + bg->getContentSize().height, -2, true);
     bg2->getTexture()->setAliasTexParameters();
-
+    auto bg3 = addBg(StringUtils::format("%s%s", bgColor, "_bg_middle.jpg").c_str(), _originSize.height + bg->getContentSize().height * 2, -2, true);
+    bg3->getTexture()->setAliasTexParameters();
     //    //颜色
     //    auto random = arc4random() % 5;
     //    //    int random=3;
@@ -157,11 +158,10 @@ bool NormalModel::init() {
     _ball->setPosition(_visibleSize / 2);
     this->addChild(_ball, 10);
 
-    if (style == 2) {
-        auto ballShadow = Sprite::createWithSpriteFrameName("ball_shadow.png");
-        ballShadow->setPosition(_ball->getContentSize().width / 2 + OFFSET.x, _ball->getContentSize().height / 2 + OFFSET.y);
-        _ball->addChild(ballShadow, -1);
-    }
+    auto ballShadow = Sprite::createWithSpriteFrameName("ball_shadow.png");
+    ballShadow->setPosition(_ball->getContentSize().width / 2 + OFFSET.x, _ball->getContentSize().height / 2 + OFFSET.y);
+    ballShadow->setName("ball_shadow");
+    _ball->addChild(ballShadow, -1);
 
     //添加障碍物
     randomAddObstacle(_visibleSize.height * 0.85);

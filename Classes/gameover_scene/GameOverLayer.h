@@ -13,10 +13,12 @@
 
 USING_NS_CC;
 
+typedef const std::function<void(const char* filePath, const char* fileName)> ScreenShootCallback;
+
 class GameOver : public Layer {
 public:
     virtual bool init();
-    const char* screenShoot();
+    void screenShoot(ScreenShootCallback& callback, const char* fileName, Image::Format format);
 
     CREATE_FUNC(GameOver);
 

@@ -59,6 +59,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -94,7 +95,31 @@ public class AppActivity extends Cocos2dxActivity {
     private InterstitialAD iad;
 
     // 调用广告
-    private Handler aHandler=new Handler(){@Override public void handleMessage(Message msg){switch(msg.what){case-1:showBannerAD();break;case-2:showInterstitialAD();break;case-3:deleteBannerAd();break;case-11:tip(-11);break;case-12:tip(-12);break;default:showShare(msg.what);break;}}};
+    private Handler aHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+            case -1:
+                showBannerAD();
+                break;
+            case -2:
+                showInterstitialAD();
+                break;
+            case -3:
+                deleteBannerAd();
+                break;
+            case -11:
+                tip(-11);
+                break;
+            case -12:
+                tip(-12);
+                break;
+            default:
+                showShare(msg.what);
+                break;
+            }
+        }
+    };
 
     void tip(int n) {
         if (n == -11) {
@@ -120,8 +145,17 @@ public class AppActivity extends Cocos2dxActivity {
     }
 
     private void showShare(int n) {
-        String url = "/sdcard/cannotstop.png";
-        savePic(url);
+        String url = null;
+        try {
+            url = copyGameScreenPic("cannotstop.jpg" , "/sdcard/");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally {
+            if (url == null)
+                Toast.makeText(this, "分享失败", Toast.LENGTH_SHORT).show();
+        }
+
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         // 关闭sso授权
@@ -148,15 +182,6 @@ public class AppActivity extends Cocos2dxActivity {
 
         // 启动分享GUI
         oks.show(this);
-    }
-
-    // 分享照片
-    public void SharePhoto(String photoUri, final Activity activity) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        File file = new File(photoUri);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        shareIntent.setType("image/jpeg");
-        startActivity(Intent.createChooser(shareIntent, activity.getTitle()));
     }
 
     // 展示广告
@@ -330,58 +355,31 @@ public class AppActivity extends Cocos2dxActivity {
     }
 
     /***
-     * 保存到sdcard
+     * 拷贝data/data/package name/files/文件到savePath下
      *
-     * @param Bitmap
-     *            b
-     * @param String
-     *            strFileName 保存地址
+     * @param fileName 保存的文件名
+     * @param savePath 保存文件的路径
      */
-    private void savePic(String strFileName) {
-        FileInputStream localStream = null;
-        try {
-            localStream = openFileInput("cannotstop.png");
-        } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            System.out.println("异常");
-            e1.printStackTrace();
-        }
-        Bitmap bitmap = BitmapFactory.decodeStream(localStream);
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(strFileName);
-            if (null != fos) {
-                boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
-                fos.flush();
-                fos.close();
-                if (success) {
-                }
-                // Toast.makeText(MainActivity.this, "截屏成功",
-                // Toast.LENGTH_SHORT).show();
+    public static String copyGameScreenPic(String fileName, String savePath) throws IOException {
+        boolean sdExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+        if (sdExist) { // 设置图片拷贝后的存储路径 String
+            File f1 = new File(savePath);
+            if (!f1.exists()) {
+                f1.mkdirs();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void shareMsg(String activityTitle, String msgTitle, String msgText, String imgPath) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        if (imgPath == null || imgPath.equals("")) {
-            intent.setType("text/plain"); // 纯文本
-        } else {
-            File f = new File(imgPath);
-            if (f != null && f.exists() && f.isFile()) {
-                intent.setType("image/png");
-                Uri u = Uri.fromFile(f);
-                intent.putExtra(Intent.EXTRA_STREAM, u);
+            savePath += fileName;
+            File share = new File(getContext().getFilesDir().toString().substring(1) + "/" + fileName);
+            InputStream is = new FileInputStream(share);
+            FileOutputStream os = new FileOutputStream(savePath);
+            byte[] buffer = new byte[1024];
+            int count = 0;
+            while ((count = is.read(buffer)) > 0) {
+                os.write(buffer, 0, count);
             }
+            is.close();
+            os.close();
+            return savePath;
         }
-        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
-        intent.putExtra(Intent.EXTRA_TEXT, msgText);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(Intent.createChooser(intent, activityTitle));
+        return null;
     }
 }

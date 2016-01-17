@@ -1,6 +1,7 @@
 #android
 proj.android/bin/
 gen
+*.class
 obj
 proj.android/libs/armeabi/*.so
 proj.android/libs/armeabi
@@ -12,6 +13,8 @@ proj.android/libs/armeabi/libcocos2dcpp.so
 proj.android/bin/resources.ap
 proj.android/bin/AndroidManifest.xml_
 *.o
+*.a
+*.d
 proj.ios_mac/DayDayUp.xcodeproj/project.pbxproj
 proj.ios_mac/DayDayUp.xcodeproj/project.xcworkspace/xcuserdata/liubo.xcuserdatad/UserInterfaceState.xcuserstate
 proj.ios_mac/DayDayUp.xcodeproj/xcuserdata/liubo.xcuserdatad/xcschemes/DayDayUp iOS.xcscheme

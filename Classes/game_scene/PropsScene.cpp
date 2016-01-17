@@ -188,7 +188,6 @@ bool PropsScene::onContactBegin(PhysicsContact& contact) {
                     } else if (_isScaleSmal) {
                         _isScaleSmal = false;
                         _ball->stopAction(_scaleAction);
-                        _ball->setScale(1, 1);
                     }
                     auto blink = Blink::create(BLINK_TIME, 3);
                     auto scaleBig = ScaleTo::create(0.2, 2, 2);
