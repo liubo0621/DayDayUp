@@ -222,7 +222,13 @@ bool PropsScene::onContactBegin(PhysicsContact& contact) {
     } else if (_isScaleBig) {  // 无敌
         if (body->getGroup() == -1) {
             body->setGravityEnable(true);
-            body->setVelocity(Vec2(0, 1000));
+            if (body->getPosition().x > _visibleSize.width / 2) {
+                body->setAngularVelocity(360);
+                body->setVelocity(Vec2(1000, 2000));
+            } else {
+                body->setAngularVelocity(-360);
+                body->setVelocity(Vec2(-1000, 2000));
+            }
         }
     }
 

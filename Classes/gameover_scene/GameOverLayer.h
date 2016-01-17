@@ -9,15 +9,18 @@
 #ifndef __DayDayUp__GameOverLayer__
 #define __DayDayUp__GameOverLayer__
 
-#include <stdio.h>
 #include "cocos2d.h"
 
 USING_NS_CC;
 
-class GameOver:public Layer{
+class GameOver : public Layer {
 public:
     virtual bool init();
-    
+    const char* screenShoot();
+
     CREATE_FUNC(GameOver);
+
+private:
+    Size visibleSize;
 };
 #endif /* defined(__DayDayUp__GameOverLayer__) */

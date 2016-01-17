@@ -14,6 +14,7 @@
 using namespace ui;
 
 #define OBSTACLE_NUM 11
+const Vec2 OFFSET(30, -30);
 
 Scene *NormalModel::createScene() {
     auto scene = Scene::createWithPhysics();
@@ -40,8 +41,37 @@ bool NormalModel::init() {
     _obstacles.clear();
     _rank = 0;
 
+    //清除资源
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("game_skin_blue.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("game_skin_green.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("game_skin_pink.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("game_style1.plist");
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("game_style2.plist");
+
+    //加载资源
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GameOver.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Game.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_common.plist");
+    //风格
+    int style = UserDefault::getInstance()->getIntegerForKey("skin", 1);
+    if (style == 1) {
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_style1.plist");
+    } else if (style == 2) {
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_style2.plist");
+    }
+    //背景
+    auto randomBg = arc4random() % 3;
+    const char *bgColor = nullptr;
+    if (randomBg == 0) {
+        bgColor = "blue";
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_skin_blue.plist");
+    } else if (randomBg == 1) {
+        bgColor = "green";
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_skin_green.plist");
+
+    } else if (randomBg == 2) {
+        bgColor = "pink";
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_skin_pink.plist");
+    }
 
     std::string difficulty = UserDefault::getInstance()->getStringForKey("difficulty");
     if (difficulty == EASY) {
@@ -53,11 +83,11 @@ bool NormalModel::init() {
     }
 
     //背景
-    addBg("bg_bottom.jpg", _originSize.height, -3);
+    addBg(StringUtils::format("%s%s", bgColor, "_bg_bottom.jpg").c_str(), _originSize.height, -3);
     addBg("bg_top.png", _originSize.height, -1);
-    auto bg = addBg("bg_middle.jpg", _originSize.height, -2, true);
+    auto bg = addBg(StringUtils::format("%s%s", bgColor, "_bg_middle.jpg").c_str(), _originSize.height, -2, true);
     bg->getTexture()->setAliasTexParameters();
-    auto bg2 = addBg("bg_middle.jpg", _originSize.height + bg->getContentSize().height, -2, true);
+    auto bg2 = addBg(StringUtils::format("%s%s", bgColor, "_bg_middle.jpg").c_str(), _originSize.height + bg->getContentSize().height, -2, true);
     bg2->getTexture()->setAliasTexParameters();
 
     //    //颜色
@@ -86,7 +116,7 @@ bool NormalModel::init() {
     //    }
 
     //底部地面
-    auto bottom = Sprite::create("bottom.png");
+    auto bottom = Sprite::createWithSpriteFrameName("bottom.png");
     _obstacles.pushBack(bottom);
     auto bottomBody = PhysicsBody::createEdgeBox(bottom->getContentSize());
     bottomBody->setCategoryBitmask(0x01);
@@ -126,6 +156,12 @@ bool NormalModel::init() {
     _ball->setPhysicsBody(_ballBody);
     _ball->setPosition(_visibleSize / 2);
     this->addChild(_ball, 10);
+
+    if (style == 2) {
+        auto ballShadow = Sprite::createWithSpriteFrameName("ball_shadow.png");
+        ballShadow->setPosition(_ball->getContentSize().width / 2 + OFFSET.x, _ball->getContentSize().height / 2 + OFFSET.y);
+        _ball->addChild(ballShadow, -1);
+    }
 
     //添加障碍物
     randomAddObstacle(_visibleSize.height * 0.85);

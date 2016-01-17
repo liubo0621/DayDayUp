@@ -51,20 +51,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-    //res
+    // res
     FileUtils::getInstance()->addSearchPath("fonts");
     FileUtils::getInstance()->addSearchPath("gameover");
     FileUtils::getInstance()->addSearchPath("game");
     FileUtils::getInstance()->addSearchPath("menu");
     FileUtils::getInstance()->addSearchPath("sound");
     FileUtils::getInstance()->addSearchPath("utils");
-
-    //class
-    FileUtils::getInstance()->addSearchPath("gameover_scene");
-    FileUtils::getInstance()->addSearchPath("game_scene");
-    FileUtils::getInstance()->addSearchPath("menu_scene");
-    FileUtils::getInstance()->addSearchPath("tools");
-    FileUtils::getInstance()->addSearchPath("tools/platfom/android");
+    FileUtils::getInstance()->addSearchPath("game/skin_blue");
+    FileUtils::getInstance()->addSearchPath("game/skin_pink");
+    FileUtils::getInstance()->addSearchPath("game/skin_green");
 
     // create a scene. it's an autorelease object
     auto scene = MenuScene::createScene();

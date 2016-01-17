@@ -104,7 +104,7 @@
             android:value="560f92fe67e58e56b3001f9d" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="umeng" />
+            android:value="yingyongbao" />
 
         <activity
             android:name="org.cocos2dx.cpp.AppActivity"

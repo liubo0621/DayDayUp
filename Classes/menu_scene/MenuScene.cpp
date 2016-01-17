@@ -41,7 +41,7 @@ bool MenuScene::init() {
     _visibleSize = Director::getInstance()->getVisibleSize();
     _originSize = Director::getInstance()->getVisibleOrigin();
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Menu.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("menu.plist");
 
     //背景
     int random = arc4random() % 3;
@@ -159,6 +159,28 @@ bool MenuScene::init() {
         }
     });
     addChild(soundBtn);
+
+    //皮肤
+    auto skinBtn = Button::create();
+    skinBtn->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    skinBtn->setPosition(Vec2(15, _originSize.height + 15));
+    if (UserDefault::getInstance()->getIntegerForKey("skin", 1) == 1) {
+        skinBtn->loadTextureNormal("skin1.png", TextureResType::PLIST);
+    } else {
+        skinBtn->loadTextureNormal("skin2.png", TextureResType::PLIST);
+    }
+    skinBtn->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type) {
+        if (type == Widget::TouchEventType::ENDED) {
+            if (UserDefault::getInstance()->getIntegerForKey("skin", 1) == 1) {
+                skinBtn->loadTextureNormal("skin2.png", TextureResType::PLIST);
+                UserDefault::getInstance()->setIntegerForKey("skin", 2);
+            } else {
+                skinBtn->loadTextureNormal("skin1.png", TextureResType::PLIST);
+                UserDefault::getInstance()->setIntegerForKey("skin", 1);
+            }
+        }
+    });
+    addChild(skinBtn);
 
     //天天向上 破浪效果
     auto func01 = CallFunc::create([=] { addWave(day1); });

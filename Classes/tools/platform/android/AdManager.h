@@ -9,12 +9,14 @@
 #ifndef AdManager_h
 #define AdManager_h
 
-#include <stdio.h>
 #include "AdManagerProtocol.h"
+#include <stdio.h>
+#include <string.h>
 
 class AdManager : public AdManagerProtocol {
 public:
-    void showAD(int n);
+    virtual void showAD(int n);
+    virtual void share(const char *path, int score);
 };
 
 #endif /* AdManager_h */

@@ -26,7 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +62,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -90,36 +94,12 @@ public class AppActivity extends Cocos2dxActivity {
     private InterstitialAD iad;
 
     // 调用广告
-    private Handler aHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case -1:
-                showBannerAD();
-                break;
-            case -2:
-                showInterstitialAD();
-                break;
-            case -3:
-                deleteBannerAd();
-                break;
-            case -11:
-                tip(-11);
-                break;
-            case -12:
-                tip(-12);
-                break;
-            default:
-                showShare(msg.what);
-                break;
-            }
-        }
-    };
+    private Handler aHandler=new Handler(){@Override public void handleMessage(Message msg){switch(msg.what){case-1:showBannerAD();break;case-2:showInterstitialAD();break;case-3:deleteBannerAd();break;case-11:tip(-11);break;case-12:tip(-12);break;default:showShare(msg.what);break;}}};
 
-    void tip(int n){
-        if(n == -11) {
+    void tip(int n) {
+        if (n == -11) {
             Toast.makeText(this, "您还没选择模式哦！", Toast.LENGTH_LONG).show();
-        }else if(n == -12) {
+        } else if (n == -12) {
             Toast.makeText(this, "您还没选择难度哦", Toast.LENGTH_LONG).show();
         }
     }
@@ -136,10 +116,12 @@ public class AppActivity extends Cocos2dxActivity {
         JNIHelper.init(aHandler);
 
         // 初始化广告
-//        initBT();
+        // initBT();
     }
 
     private void showShare(int n) {
+        String url = "/sdcard/cannotstop.png";
+        savePic(url);
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         // 关闭sso授权
@@ -153,9 +135,8 @@ public class AppActivity extends Cocos2dxActivity {
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我在《一发不止》这个游戏中得了" + n + "分，还有谁？ 求超越！");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        // String url="file:///android_asset/DayDayUp.png";
-        // oks.setImagePath(url);// 确保SDcard下面存在此张图片
-        oks.setImageUrl("https://raw.githubusercontent.com/nangongyifeng/SharePhoto/master/cannot_stop.png");
+        oks.setImagePath(url);// 确保SDcard下面存在此张图片
+        // oks.setImageUrl("https://raw.githubusercontent.com/nangongyifeng/SharePhoto/master/cannot_stop.png");
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.liubo.DayDayUp");
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
@@ -180,22 +161,22 @@ public class AppActivity extends Cocos2dxActivity {
 
     // 展示广告
     public void showBannerAD() {
-//        addBTBannerAD();
-//        isShowBTbanner = true;
-//
-//        if (mBaiduBanner_Image.getVisibility() == View.GONE) {
-            addGDTbannerAD();
-//            isShowBTbanner = false;
-//        }
+        // addBTBannerAD();
+        // isShowBTbanner = true;
+        //
+        // if (mBaiduBanner_Image.getVisibility() == View.GONE) {
+        addGDTbannerAD();
+        // isShowBTbanner = false;
+        // }
     }
 
     public void showInterstitialAD() {
         // TODO Auto-generated method stub
-//        if (!isShowBTbanner) {
-            addGDTInterstitialAD();
-//        }else{
-//            addBTInterstitialAD();
-//        }
+        // if (!isShowBTbanner) {
+        addGDTInterstitialAD();
+        // }else{
+        // addBTInterstitialAD();
+        // }
     }
 
     public void deleteBannerAd() {
@@ -292,7 +273,7 @@ public class AppActivity extends Cocos2dxActivity {
     }
 
     private void doCloseGDTBanner() {
-        if (bv!=null) {
+        if (bv != null) {
             bannerContainer.removeAllViews();
             bv.destroy();
             bv = null;
@@ -346,5 +327,61 @@ public class AppActivity extends Cocos2dxActivity {
         // 销毁广点通banner
         bv.destroy();
         bv = null;
+    }
+
+    /***
+     * 保存到sdcard
+     *
+     * @param Bitmap
+     *            b
+     * @param String
+     *            strFileName 保存地址
+     */
+    private void savePic(String strFileName) {
+        FileInputStream localStream = null;
+        try {
+            localStream = openFileInput("cannotstop.png");
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("异常");
+            e1.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(localStream);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(strFileName);
+            if (null != fos) {
+                boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+                if (success) {
+                }
+                // Toast.makeText(MainActivity.this, "截屏成功",
+                // Toast.LENGTH_SHORT).show();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void shareMsg(String activityTitle, String msgTitle, String msgText, String imgPath) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        if (imgPath == null || imgPath.equals("")) {
+            intent.setType("text/plain"); // 纯文本
+        } else {
+            File f = new File(imgPath);
+            if (f != null && f.exists() && f.isFile()) {
+                intent.setType("image/png");
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(Intent.EXTRA_STREAM, u);
+            }
+        }
+        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+        intent.putExtra(Intent.EXTRA_TEXT, msgText);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, activityTitle));
     }
 }

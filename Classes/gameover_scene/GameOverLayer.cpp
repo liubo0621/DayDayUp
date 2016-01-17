@@ -19,6 +19,7 @@
 #include "TimeScene.h"
 #include "TwinkleScene.h"  //闪烁模式
 #include "ui/CocosGUI.h"
+#include <string.h>
 
 #include <iostream>
 
@@ -35,7 +36,7 @@ bool GameOver::init() {
         AdManagerProtocol::getInstance()->showAD(-2);  //插屏
     }
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
+    visibleSize = Director::getInstance()->getVisibleSize();
 
     auto bg = LayerColor::create(Color4B::BLACK);
     bg->setOpacity(95);
@@ -144,7 +145,10 @@ bool GameOver::init() {
     shareBtn->addTouchEventListener([=](Ref* pSender, Widget::TouchEventType type) {
         if (type == Widget::TouchEventType::ENDED) {
             log("share...");
-            AdManagerProtocol::getInstance()->showAD(bestScore);
+            const char* path = screenShoot();
+            auto imgFile = StringUtils::format("%scannotstop.jpg", path);
+            log("imgPath %s", imgFile.c_str());
+            AdManagerProtocol::getInstance()->share(imgFile.c_str(), score);
         }
     });
 
@@ -179,4 +183,23 @@ bool GameOver::init() {
     });
 
     return true;
+}
+
+const char* GameOver::screenShoot() {
+    //定义一个屏幕大小的渲染纹理
+    RenderTexture* pScreen = RenderTexture::create(visibleSize.width, visibleSize.height, kCCTexture2DPixelFormat_RGBA8888);
+    //获得当前的场景指针
+    Scene* pCurScene = Director::getInstance()->getRunningScene();
+    //渲染纹理开始捕捉
+    pScreen->begin();
+    //当前场景参与绘制
+    pCurScene->visit();
+    //结束捕捉
+    pScreen->end();
+    //保存为png
+    pScreen->saveToFile("cannotstop.png", kCCImageFormatPNG);  //图片质量不好
+    //保存为jpg
+    //    pScreen->saveToFile("cannotstop.jpg", kCCImageFormatJPEG);
+
+    return FileUtils::getInstance()->getWritablePath().c_str();
 }

@@ -19,5 +19,10 @@ public class JNIHelper {
 		msg.what = n;
 		msg.sendToTarget();
 	}
-	
+
+	private static void share(String imgPath, int score) {
+//	    System.out.println("path " + imgPath);
+//	    System.out.println("score" + score);
+	}
+
 }

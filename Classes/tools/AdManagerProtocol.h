@@ -10,12 +10,16 @@
 #define AdManagerProtocol_h
 
 #include <stdio.h>
+#include <string.h>
 
 class AdManagerProtocol {
 public:
-    
     static AdManagerProtocol* getInstance();
-    void virtual showAD(int n) {};
+    virtual void showAD(int n){};
+    virtual void share(const char* path, int score) {
+        printf("path %s \n", path);
+        printf("score %d", score);
+    };
 };
 
 #endif /* AdManagerProtocol_h */
