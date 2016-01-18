@@ -151,9 +151,6 @@ public class AppActivity extends Cocos2dxActivity {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }finally {
-            if (url == null)
-                Toast.makeText(this, "分享失败", Toast.LENGTH_SHORT).show();
         }
 
         ShareSDK.initSDK(this);

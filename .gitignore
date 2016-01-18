@@ -8,6 +8,7 @@ proj.android/libs/armeabi
 assets
 proguard
 local.properties
+proj.android/gen/com/liubo/DayDayUp/R.java
 proj.android/bin/classes.dex
 proj.android/libs/armeabi/libcocos2dcpp.so
 proj.android/bin/resources.ap
