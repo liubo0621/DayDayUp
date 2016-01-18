@@ -8,6 +8,7 @@
 
 #include "Constants.h"
 #include "GameOverLayer.h"
+#include "MobClickCpp.h"
 #include "NormalScene.h"
 #include "ui/cocosGUI.h"
 
@@ -55,8 +56,10 @@ bool NormalModel::init() {
     int style = UserDefault::getInstance()->getIntegerForKey("skin", 1);
     if (style == 1) {
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_style1.plist");
+        umeng::MobClickCpp::eventWithAttributesString("skin", "white");
     } else if (style == 2) {
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile("game_style2.plist");
+        umeng::MobClickCpp::eventWithAttributesString("skin", "yellow");
     }
     //背景
     auto randomBg = arc4random() % 3;
